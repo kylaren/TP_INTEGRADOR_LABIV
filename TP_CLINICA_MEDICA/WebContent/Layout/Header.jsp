@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html >
 <html>
 <head>
 	
@@ -26,19 +26,6 @@
     <ul class="navbar-nav mr-auto">
 
 	
-      <li class="nav-item">
-        <a class="nav-link" href="#">Asignar Turnos</a>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-          ABMLs
-        </a>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="#">ABML Medicos</a>
-          <a class="dropdown-item" href="#">ABML Turnos</a>
-        </div>
-      </li>
-
     </ul>
     <form class="form-inline my-2 my-lg-0">
       <button class="btn btn-outline-success my-2 my-sm-0 text-light" type="submit">Ingresar</button>

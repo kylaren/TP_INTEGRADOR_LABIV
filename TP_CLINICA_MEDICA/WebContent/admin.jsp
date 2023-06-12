@@ -38,9 +38,9 @@
 
 	<div class="menu">
         <ul>
-            <li><a href="registrarPaciente.jsp">Registrar Paciente</a></li>
-            <li><a href="registrarMedico.jsp">Registrar Médico</a></li>
-            <li><a href="asignarTurno.jsp">Asignar Turno</a></li>
+            <li><a href="ABMLPacientes.jsp">Registrar Paciente</a></li>
+            <li><a href="ABMLMedicos.jsp">Registrar Médico</a></li>
+            <li><a href="AsignacionTurnos.jsp">Asignar Turno</a></li>
         </ul>
     </div>
     

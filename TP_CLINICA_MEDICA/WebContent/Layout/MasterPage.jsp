@@ -17,7 +17,7 @@
 	    	 
 	    	<p>
 			  <a class="btn btn-primary" data-toggle="collapse" href="#collapse1" role="button" aria-expanded="false" aria-controls="collapse1">
-			    Pantalla de Logueo
+			    Ingresar
 			  </a>
 			</p>
 			<div class="collapse" id="collapse1">
@@ -27,34 +27,6 @@
 			</div>
 	    	
 	    	
-	    	<br>
-	    	<!-- ABMLMEDICOS -->
-	    	
-	    	<p>
-			  <a class="btn btn-primary" data-toggle="collapse" href="#collapse2" role="button" aria-expanded="false" aria-controls="collapse2">
-			    ABML de Medicos
-			  </a>
-			</p>
-			<div class="collapse" id="collapse2">
-			  <div class="card card-body">
-			  	  <%@ include file="../ABMLs/ABMLMedicos.jsp" %>
-			  </div>
-			</div>
-	    	
-	    	<!-- ABMLPACIENTES -->
-	    	<br>
-	       	<p>
-		  	<a class="btn btn-primary" data-toggle="collapse" href="#collapse3" role="button" aria-expanded="false" aria-controls="collapse3">
-			    ABML de Pacientes
-			  </a>
-			</p>
-			<div class="collapse" id="collapse3">
-			  <div class="card card-body">
-			  	  <%@ include file="../ABMLs/ABMLPacientes.jsp" %>
-			  </div>
-			</div>
-	    	
-	    
 	    	<br>
 	    	
 	    	<!-- DESARROLLAR FUNCION QUE PERMITA CAMBIAR ESTE SITIO EN SERVLETS  -->

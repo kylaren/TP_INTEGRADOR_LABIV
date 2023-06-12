@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -14,15 +14,16 @@
 		<div class="form-group">
 		
 		</div>
-		<label for="usuario">Usuario:</label> <input id="usuario" type="text"
-			placeholder="Ingrese su usuario" required name="usuario"><br>
-		<label for="contrasena">Contraseña:</label> <input type="password"
-			name="contrasena" id="contrasena" required><br> <label
-			for="tipoUsuario">Tipo de Usuario:</label> <select name="tipoUsuario"
-			id="tipoUsuario">
-			<option value="admin">Administrador</option>
-			<option value="medico">Médico</option>
-		</select><br> <input type="submit" value="Iniciar Sesión">
+		<label for="usuario">Usuario:</label> 
+			<input id="usuario" type="text" placeholder="Ingrese su usuario" required name="usuario"><br>
+		<label for="contrasena">Contraseña:</label> 
+			<input id="contrasena" type="password" placeholder="Ingrese su contraseña" required name="contrasena"><br> 
+		<label for="tipoUsuario">Tipo de Usuario:</label> 
+			<select id="tipoUsuario" name="tipoUsuario" required>
+				<option value="" selected disabled>- Seleccione tipo de usuario -</option>
+				<option value="admin">Administrador</option>
+				<option value="medico">Médico</option>
+			</select><br> <input type="submit" value="Iniciar Sesión">
 	</form>
 
 

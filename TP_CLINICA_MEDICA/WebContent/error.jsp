@@ -33,7 +33,7 @@
 		<h2>Error de autenticación</h2>
 		<p>Las credenciales proporcionadas no son válidas.</p>
 		<p>Por favor, intenta nuevamente.</p>
-		<button onclick="window.location.href='login.jsp'">Volver a
+		<button onclick="window.location.href='MasterPage.jsp'">Volver a
 			intentar</button>
 	</div>
 
