@@ -17,6 +17,7 @@
 	<body>
 
 		<h1> ABML de Medicos </h1>
+		<br>
 		<div id=tablaWrapper>
 			<table border="1" id="tablaMedicos" class="table table-bordered">
 				<thead>
