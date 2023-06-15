@@ -40,6 +40,8 @@
 			  	  <%@ include file="../ABMLs/ABMLMedicos.jsp" %>
 			  </div>
 			</div>
+			
+			
 	    	
 	    	<!-- ABMLPACIENTES -->
 	    	<br>
@@ -87,14 +89,40 @@
 	    	
 	    	<br>
 			
+			
+			<!-- FORMULARIO MEDICOS -->
+			
+	    	<p>
+			  <a class="btn btn-primary" data-toggle="collapse" href="#collapse6" role="button" aria-expanded="false" aria-controls="collapse6">
+			    Formulario de Ingreso de Medicos
+			  </a>
+			</p>
+			<div class="collapse" id="collapse6">
+			  <div class="card card-body">
+			  	  <%@ include file="../Formularios/FormularioMedico.jsp" %>
+			  </div>
+			</div>
+			
+			<!-- FORMULARIO PACIENTE -->
+			<br>
+			
+	    	<p>
+			  <a class="btn btn-primary" data-toggle="collapse" href="#collapse7" role="button" aria-expanded="false" aria-controls="collapse7">
+			    Formulario de Ingreso de Pacientes
+			  </a>
+			</p>
 
-
-
+			
+			<div class="collapse" id="collapse7">
+			  <div class="card card-body">
+			  	  <%@ include file="../Formularios/FormularioPaciente.jsp" %>
+			  </div>
+			</div>
+			<br>
 	    	
 	    	<!-- DESARROLLAR FUNCION QUE PERMITA CAMBIAR ESTE SITIO EN SERVLETS  -->
 
-			
-			<br>
+
 		</div>
 		
 	</div>
