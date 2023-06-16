@@ -10,7 +10,7 @@
 
 
 	<h1>Iniciar Sesión</h1>
-	<form action="LoginServlet" method="post">
+	<form action="../LoginServlet" method="post">
 		<div class="form-group">
 		
 		</div>

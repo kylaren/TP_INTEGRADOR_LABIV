@@ -33,8 +33,14 @@
 		<h2>Error de autenticación</h2>
 		<p>Las credenciales proporcionadas no son válidas.</p>
 		<p>Por favor, intenta nuevamente.</p>
-		<button onclick="window.location.href='MasterPage.jsp'">Volver a
-			intentar</button>
+		
+	<button onclick="redirectToMasterPage()">Volver a intentar</button>
+
+	<script>
+    	function redirectToMasterPage() {
+        	window.location.href = "MasterPage.jsp";
+    	}
+	</script>
 	</div>
 
 </body>

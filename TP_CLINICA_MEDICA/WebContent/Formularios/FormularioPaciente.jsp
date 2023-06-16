@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -8,8 +8,9 @@
 </head>
 <body>
 	<h1>Agregar Paciente</h1>
-	<div class="form-group">
-		<form>
+	<form>
+		<div class="form-group">
+		
 	  
 	  	<!-- DNI PACIENTE -->
 	  	
@@ -105,11 +106,10 @@
 			    <label for="telPaciente">Telefono del Paciente</label>
 			    <input type="number" class="form-control" id="telPaciente" >
 		  	</div>	
-	  <br>
-	  <button type="submit" class="btn btn-dark">Agregar Paciente</button>
+	  			<br>
+	  			<button type="submit" class="btn btn-dark">Agregar Paciente</button>
 	  
-	  </div>
-
+	  	</div>
 
 	  
 	  <!-- ACA VER SI TOMAR VALOR DE SESION O AGREGAR DDL -->

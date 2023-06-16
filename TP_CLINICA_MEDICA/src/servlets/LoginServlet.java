@@ -30,12 +30,13 @@ public class LoginServlet extends HttpServlet {
 		String usuario = request.getParameter("usuario");
         String contrasena = request.getParameter("contrasena");
         String tipoUsuario = request.getParameter("tipoUsuario");
+        String contextPath = request.getContextPath();
 
         
         if (usuario.equals("admin") && contrasena.equals("admin123") && tipoUsuario.equals("admin")) {
             HttpSession session = request.getSession();
             session.setAttribute("tipoUsuario", "admin");
-            response.sendRedirect("admin.jsp"); // Redirige a página de administrador
+            response.sendRedirect(contextPath + "/Layout/MasterPage.jsp"); // Redirige a página de administrador
         }
         else if (usuario.equals("medico") && contrasena.equals("medico123") && tipoUsuario.equals("medico")) {
             HttpSession session = request.getSession();
