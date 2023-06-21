@@ -38,7 +38,7 @@
 
 	<script>
     	function redirectToMasterPage() {
-        	window.location.href = "MasterPage.jsp";
+        	window.location.href = "Layout/MasterPage.jsp";
     	}
 	</script>
 	</div>
