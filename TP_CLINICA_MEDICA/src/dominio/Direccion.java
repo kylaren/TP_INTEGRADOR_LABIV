@@ -72,6 +72,16 @@ public class Direccion {
 	public void setCodigoPostal(String codigoPostal) {
 		this.codigoPostal = codigoPostal;
 	}
+	
+	public void setDireccion(String calle, String numero, String localidad, String provincia, String pais, String codigoPostal) {
+		this.calle = calle;
+		this.numero = numero;
+		this.localidad = localidad;
+		this.provincia = provincia;
+		this.pais = pais;
+		this.codigoPostal = codigoPostal;
+		
+	}
 
 	@Override
 	public String toString() {
