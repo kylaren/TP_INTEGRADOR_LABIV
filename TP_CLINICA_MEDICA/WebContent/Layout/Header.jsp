@@ -16,35 +16,54 @@
 </head>
 <body>
 	
-	<nav class="navbar navbar-expand-lg navbar-dark text-light bg-primary">
-  <a class="navbar-brand"  href="#">Clinica UTN <img src="../Images/greenCross.png" width="30" height="30">  </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-
+	<nav class="navbar navbar-expand-lg navbar-dark text-light bg-primary" style="position:fixed; width:100%; z-index:98;">
+		<div class="container-fluid">
+		
+			 <a class="navbar-brand"  href="#">Clinica UTN <img src="../Images/greenCross.png" width="30" height="30">  </a>
+			  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			    <span class="navbar-toggler-icon"></span>
+			  </button>
+			
+			  <div class="collapse navbar-collapse " id="navbarSupportedContent">
+			  
+			  	<!-- FORMA PARA ENVIAR METODOS AL SERVLET -->
+			  
+			  	<form method="post" class="form-inline d-flex w-100 justify-content-between" action="servletHeader">
 	
-      <li class="nav-item">
-        <a class="nav-link" href="#">Asignar Turnos</a>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-          ABMLs
-        </a>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="#">ABML Medicos</a>
-          <a class="dropdown-item" href="#">ABML Turnos</a>
-        </div>
-      </li>
+				    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+				
+					
+				      <li class="nav-item">
+				        <a class="nav-link" href="servletHeader?master=turnos" type="submit" >Asignar Turnos</a>
+				      </li>
+				      <li class="nav-item dropdown">
+				        <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+				          ABMLs
+				        </a>
+				        <div class="dropdown-menu">
+				          <a class="dropdown-item" href="servletHeader?master=medicos"> ABML de Medicos </a>
+				          <a class="dropdown-item" href="servletHeader?master=pacientes" > ABML de Pacientes</a>
+					
+				        </div>
+				      </li>
+				    </ul>
+				    <ul class="navbar-nav  mb-2 mb-lg-0 navbar-right">
+						<li class="nav-item">
+			     	 		 <a class="btn btn-outline-success text-light" href="servletHeader?master=login" >Ingresar</a>		
+						</li>
+				    </ul>
+				    
 
-    </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <button class="btn btn-outline-success my-2 my-sm-0 text-light" type="submit">Ingresar</button>
-    </form>
-  </div>
-</nav>
+			    
+		
+		    
+		  	</form>
+		  </div>
+		
+		
+		</div>
+		 
+	</nav>
 	
 
 	
