@@ -5,6 +5,15 @@
 
 <html>
 <head>
+
+	<!-- BOOTSTRAP -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity ="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+
+	
+
+
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>MasterPage</title>
 </head>
@@ -12,142 +21,176 @@
 
 <body>
 
+	<!-- NAVBAR -->
+	
+	<nav class="navbar navbar-expand-lg navbar-dark text-light bg-primary" style="position:fixed; width:100%; z-index:98;">
+		<div class="container-fluid">
+		
+			 <a class="navbar-brand"  href="#">Clinica UTN <img src="../Images/greenCross.png" width="30" height="30">  </a>
+			  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			    <span class="navbar-toggler-icon"></span>
+			  </button>
+			
+			  <div class="collapse navbar-collapse " id="navbarSupportedContent">
+			  
+			  	<!-- FORMA PARA ENVIAR METODOS AL SERVLET -->
+			  	
+				<!-- DEPENDIENDO DE USUARIO LOGUEADO SE MODIFICA LO MOSTRADO EN EL NAVBAR  -->
+				<form class="form-inline d-flex w-100 justify-content-between" action="servletMaster" method="post">
+				<%
+					String tipoUsuario = (String) session.getAttribute("tipoUsuario");		
+					if (tipoUsuario != null && tipoUsuario.equals("admin"))  {  
+				%>
+					
+	    	
+				    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+				      <li class="nav-item">
+				        <a class="nav-link" href="servletMaster?master=asignarTurnos" type="submit" >Asignar Turnos</a>
+				      </li>
+				      <li class="nav-item dropdown">
+				        <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+				          ABMLs
+				        </a>
+				        <div class="dropdown-menu">
+				          <a class="dropdown-item" href="servletMaster?master=medicos"> ABML de Medicos </a>
+				          <a class="dropdown-item" href="servletMaster?master=pacientes" > ABML de Pacientes</a>
+					
+				        </div>
+				      </li>
+				      </ul>
+				      
+		              <ul class="navbar-nav  mb-2 mb-lg-0 navbar-right">
+						<li class="nav-item">
+							<input class="btn btn-outline-danger text-light" type="submit" name="btnCerrarSesion" value="Cerrar Sesion">
+	
+	
+						</li>
+				    </ul>
+					
+				      
+			   		<%
+						} else if (tipoUsuario != null && tipoUsuario.equals("medico")) {
+					%>   
+					
+					
+				    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+				      <li class="nav-item">
+				        <a class="nav-link" href="servletMaster?master=listarTurnos" type="submit" >Listar Turnos</a>
+				      </li>				    
+			        </ul>
+				      
+		            <ul class="navbar-nav  mb-2 mb-lg-0 navbar-right">
+						<li class="nav-item">
+							<input class="btn btn-outline-danger text-light" type="submit" name="btnCerrarSesion" value="Cerrar Sesion">
+	
+						</li>
+				    </ul>
+					
+						<%
+						} else {
+						%>
+					
+				   <ul class="navbar-nav  mb-2 mb-lg-0 navbar-right justify-content-right">
+						<li class="nav-item">
+			     	 		 <a class="btn btn-outline-success text-light justify-content-right" href="servletMaster?master=login" >Ingresar</a>		
+						</li>
+				    </ul>
+					
+							<% } %>
+				   
+				 
+			   </form> 		    
 
+		  </div>
+
+		</div>
+		 
+	</nav>
+	
+	
+	
+	
+	<!-- CUERPO DE LA MASTER PAGE -->
+	
+			<br>
+			<br>
+		<br>
 	<div style="background-color:rgba( 255, 255, 255, 0.7); margin-bottom:-20px; min-height:100vh" >
-		<%@ include file="Header.jsp" %>
 	    <br>
 	    <div class=" container body-content bg-light px-5" >
-	    	<br>
-	    	
-	    	<!-- 	Si el tipo de usuario es admin y su clave es correcta mostrara los .jsp correspondientes a este -->
-	    	<%
-	    	String tipoUsuario = (String) session.getAttribute("tipoUsuario");
-	    	
-	    	if (tipoUsuario != null && tipoUsuario.equals("admin"))  {  
-	    		 %>
-	    	
-		    	<!-- ABMLMEDICOS -->
-		    	
-		    	<p>
-				  <a class="btn btn-primary" data-toggle="collapse" href="#collapse2" role="button" aria-expanded="false" aria-controls="collapse2">
-				    ABML de Medicos
-				  </a>
-				</p>
-				<div class="collapse" id="collapse2">
-				  <div class="card card-body">
-				  	  <%@ include file="../ABMLs/ABMLMedicos.jsp" %>
-				  </div>
-				</div>
-			
-			
-	    	
-		    	<!-- ABMLPACIENTES -->
-		    	<br>
-		       	<p>
-			  	<a class="btn btn-primary" data-toggle="collapse" href="#collapse3" role="button" aria-expanded="false" aria-controls="collapse3">
-				    ABML de Pacientes
-				  </a>
-				</p>
-				<div class="collapse" id="collapse3">
-				  <div class="card card-body">
-				  	  <%@ include file="../ABMLs/ABMLPacientes.jsp" %>
-				  </div>
-				</div>
-		    	
-		    
-		    	<br>
-	    	
-		    	<!-- ASIGNAR TURNOS -->
-		    	
-				  	<p>
-			  	<a class="btn btn-primary" data-toggle="collapse" href="#collapse4" role="button" aria-expanded="false" aria-controls="collapse4">
-				    Asignacion de Turnos
-				  </a>
-				</p>
-				<div class="collapse" id="collapse4">
-				  <div class="card card-body">
-				  	  <%@ include file="../AsignacionTurnos.jsp" %>
-				  </div>
-				</div>
-		    	
-		    	<br>
 
-				<!-- LISTAR TURNOS PARA CADA MEDICO -->
-				
-			  	<p>
-			  	<a class="btn btn-primary" data-toggle="collapse" href="#collapse5" role="button" aria-expanded="false" aria-controls="collapse5">
-				    Listado de Turnos
-				  </a>
-				</p>
-				<div class="collapse" id="collapse5">
-				  <div class="card card-body">
-				  	  <%@ include file="../ListaTurnos.jsp" %>
-				  </div>
-				</div>
-		    	
-		    	<br>
-			
-			
-				<!-- FORMULARIO MEDICOS -->
-				
-		    	<p>
-				  <a class="btn btn-primary" data-toggle="collapse" href="#collapse6" role="button" aria-expanded="false" aria-controls="collapse6">
-				    Formulario de Ingreso de Medicos
-				  </a>
-				</p>
-				<div class="collapse" id="collapse6">
-				  <div class="card card-body">
-				  	  <%@ include file="../Formularios/FormularioMedico.jsp" %>
-				  </div>
-				</div>
-			
-				<!-- FORMULARIO PACIENTE -->
-				<br>
-				
-		    	<p>
-				  <a class="btn btn-primary" data-toggle="collapse" href="#collapse7" role="button" aria-expanded="false" aria-controls="collapse7">
-				    Formulario de Ingreso de Pacientes
-				  </a>
-				</p>
+			    		<br>
+			    
 	
-				
-				<div class="collapse" id="collapse7">
-				  <div class="card card-body">
-				  	  <%@ include file="../Formularios/FormularioPaciente.jsp" %>
-				  </div>
-				</div>
-				<br>
-	    	
-	    
+	
+	<% 
+	String chequeo = null;
+	
+	if(request.getAttribute("sitio")!=null)
+	{
+		chequeo = (String) request.getAttribute("sitio");
+		switch(chequeo){
+		case "login":
+			%>	
+			
+			<%@ include file="../Login.jsp" %>
+			
 			<%
-			} else if (tipoUsuario != null && tipoUsuario.equals("medico")) {
+			break;
+			
+		case "abmlMedicos":
+			
 			%>
 			
-				<!-- 	Si el tipo de usuario es medico y su clave es correcta mostrara los .jsp correspondientes a este -->
-				<!-- 	El .jsp de ListaTurnos solo le mostrara los turnos asignados al medico que inició sesión, en este caso, 'medico' es su usuario -->
-
-					<!-- LISTAR TURNOS PARA CADA MEDICO -->
+			<%@ include file="../ABMLs/ABMLMedicos.jsp" %>
 			
-				  	<p>
-				  	<a class="btn btn-primary" data-toggle="collapse" href="#collapse5" role="button" aria-expanded="false" aria-controls="collapse5">
-					    Listado de Turnos
-					  </a>
-					</p>
-					<div class="collapse" id="collapse5">
-					  <div class="card card-body">
-					  	  <%@ include file="../ListaTurnos.jsp" %>
-					  </div>
-					</div>
-			    	
-			    	<br>
-			<% 
-			} else {
+			<%
+			break;
+			
+		case "abmlPacientes":
+			
 			%>
-				<%@ include file="../Login.jsp" %>
-			<% } %>
 			
-		</div>
+			<%@ include file="../ABMLs/ABMLPacientes.jsp" %>
+			
+			<%
+			break;
+			
+		case "asignarTurnos":
+			
+			%>
+			
+		  <%@ include file="../AsignacionTurnos.jsp" %>
+			
+			<%
+			break;
+			
+		case "listarTurnos":
+			
+			%>
+			
+		  <%@ include file="../ListaTurnos.jsp" %>
+			
+			<%
+			
+		default: 
+			break;
+			
+		}
 		
+	}
+	
+			%>
+
+	
+
+
+
+	
+	<br>
+		<br>
+		
+		</div>
 	</div>
 </body>
 </html>

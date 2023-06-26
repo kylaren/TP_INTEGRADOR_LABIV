@@ -9,12 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
-@WebServlet("/LoginServlet")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/Layout/servletLogin")
+public class servletLogin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     
-    public LoginServlet() {
+    public servletLogin() {
         super();
     }
 
@@ -32,6 +32,8 @@ public class LoginServlet extends HttpServlet {
         String tipoUsuario = request.getParameter("tipoUsuario");
         String contextPath = request.getContextPath();
 
+   
+
         
         if (usuario.equals("admin") && contrasena.equals("admin123") && tipoUsuario.equals("admin")) {
             HttpSession session = request.getSession();
@@ -47,6 +49,8 @@ public class LoginServlet extends HttpServlet {
             response.sendRedirect("error.jsp");
         }
 		
+
+        
 		doGet(request, response);
 	}
 
