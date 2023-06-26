@@ -1,137 +1,80 @@
 package dominio;
 
-import java.util.Date;
+import java.time.LocalTime;
 
-public class Paciente {
+public class Paciente extends Persona{
 	
-	private String dni;
-	private String nombre;
-	private String apellido;
-	private String sexo;
-	private String nacionalidad;
-	private Date fechaNacimiento;
-	private Direccion direccion; 
-	private String correoElectronico;
-	private String telefono;
-	
+	private int id;
+	private Especialidad especialidad;
+	private DiaSemana diaAtencion;
+	private LocalTime horarioAtencion;
+	private Estado estado; 
 
-	public Paciente()
-	{
-		
+	private static int cont=0;
+	
+	// id incremental
+	public static int devuelveProximoID() {
+		return cont+1;
 	}
 
-
-	public Paciente(String dni, String nombre, String apellido, String sexo, String nacionalidad, Date fechaNacimiento,
-			Direccion direccion, String correoElectronico, String telefono) {
+	//constructor
+	public Paciente(int id, Especialidad especialidad, DiaSemana diaAtencion, LocalTime horarioAtencion,
+			Estado estado) {
 		super();
-		this.dni = dni;
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.sexo = sexo;
-		this.nacionalidad = nacionalidad;
-		this.fechaNacimiento = fechaNacimiento;
-		this.direccion = direccion;
-		this.correoElectronico = correoElectronico;
-		this.telefono = telefono;
+		cont++;
+		this.id = cont;
+		this.especialidad = especialidad;
+		this.diaAtencion = diaAtencion;
+		this.horarioAtencion = horarioAtencion;
+		this.estado = estado;
 	}
 
-
-	public String getDni() {
-		return dni;
+	// gets & sets
+	public int getId() {
+		return id;
 	}
 
-
-	public void setDni(String dni) {
-		this.dni = dni;
+	public Especialidad getEspecialidad() {
+		return especialidad;
 	}
 
-
-	public String getNombre() {
-		return nombre;
+	public void setEspecialidad(Especialidad especialidad) {
+		this.especialidad = especialidad;
 	}
 
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public DiaSemana getDiaAtencion() {
+		return diaAtencion;
 	}
 
-
-	public String getApellido() {
-		return apellido;
+	public void setDiaAtencion(DiaSemana diaAtencion) {
+		this.diaAtencion = diaAtencion;
 	}
 
-
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
+	public LocalTime getHorarioAtencion() {
+		return horarioAtencion;
 	}
 
-
-	public String getSexo() {
-		return sexo;
+	public void setHorarioAtencion(LocalTime horarioAtencion) {
+		this.horarioAtencion = horarioAtencion;
 	}
 
-
-	public void setSexo(String sexo) {
-		this.sexo = sexo;
+	public Estado getEstado() {
+		return estado;
 	}
 
-
-	public String getNacionalidad() {
-		return nacionalidad;
+	public void setEstado(Estado estado) {
+		this.estado = estado;
 	}
-
-
-	public void setNacionalidad(String nacionalidad) {
-		this.nacionalidad = nacionalidad;
-	}
-
-
-	public Date getFechaNacimiento() {
-		return fechaNacimiento;
-	}
-
-
-	public void setFechaNacimiento(Date fechaNacimiento) {
-		this.fechaNacimiento = fechaNacimiento;
-	}
-
-
-	public Direccion getDireccion() {
-		return direccion;
-	}
-
-
-	public void setDireccion(Direccion direccion) {
-		this.direccion = direccion;
-	}
-
-
-	public String getCorreoElectronico() {
-		return correoElectronico;
-	}
-
-
-	public void setCorreoElectronico(String correoElectronico) {
-		this.correoElectronico = correoElectronico;
-	}
-
-
-	public String getTelefono() {
-		return telefono;
-	}
-
-
-	public void setTelefono(String telefono) {
-		this.telefono = telefono;
-	}
-
 
 	@Override
 	public String toString() {
-		return "Paciente [dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido + ", sexo=" + sexo
-				+ ", nacionalidad=" + nacionalidad + ", fechaNacimiento=" + fechaNacimiento + ", direccion=" + direccion
-				+ ", correoElectronico=" + correoElectronico + ", telefono=" + telefono + "]";
+		return "Paciente [id=" + id + ", especialidad=" + especialidad + ", diaAtencion=" + diaAtencion
+				+ ", horarioAtencion=" + horarioAtencion + ", estado=" + estado + "]" + super.toString();
 	}
+	
+	
+	
+
 
 	
 	
