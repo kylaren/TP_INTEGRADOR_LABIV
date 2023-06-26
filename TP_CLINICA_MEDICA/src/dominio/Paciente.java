@@ -4,7 +4,6 @@ import java.util.Date;
 
 public class Paciente {
 	
-	private int id;
 	private String dni;
 	private String nombre;
 	private String apellido;
@@ -22,9 +21,9 @@ public class Paciente {
 	}
 
 
-	public Paciente(int id, String dni, String nombre, String apellido, String sexo, String nacionalidad, Date fechaNacimiento,
+	public Paciente(String dni, String nombre, String apellido, String sexo, String nacionalidad, Date fechaNacimiento,
 			Direccion direccion, String correoElectronico, String telefono) {
-		this.id = id;
+		super();
 		this.dni = dni;
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -36,13 +35,6 @@ public class Paciente {
 		this.telefono = telefono;
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	public String getDni() {
 		return dni;
@@ -110,7 +102,7 @@ public class Paciente {
 
 
 	public void setDireccion(Direccion direccion) {
-        this.direccion = direccion;
+		this.direccion = direccion;
 	}
 
 
@@ -136,16 +128,10 @@ public class Paciente {
 
 	@Override
 	public String toString() {
-		return "Paciente [id=" + id + ", dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido + ", sexo="
-				+ sexo + ", nacionalidad=" + nacionalidad + ", fechaNacimiento=" + fechaNacimiento + ", direccion="
-				+ direccion + ", correoElectronico=" + correoElectronico + ", telefono=" + telefono + "]";
+		return "Paciente [dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido + ", sexo=" + sexo
+				+ ", nacionalidad=" + nacionalidad + ", fechaNacimiento=" + fechaNacimiento + ", direccion=" + direccion
+				+ ", correoElectronico=" + correoElectronico + ", telefono=" + telefono + "]";
 	}
-
-
-	
-
-
-	
 
 	
 	
