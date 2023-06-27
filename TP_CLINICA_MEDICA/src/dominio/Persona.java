@@ -5,6 +5,7 @@ import java.time.LocalTime;
 
 public abstract class Persona {
 	
+	private Direccion direccion;
 	private String dni;
 	private String nombre;
 	private String apellido;
@@ -13,7 +14,7 @@ public abstract class Persona {
 	private Date fechaNacimiento;
 	private String email;
 	private String telefono;
-	private Direccion direccion;
+	
 	
 	///CONSTRUCTORES
 	
@@ -22,9 +23,10 @@ public abstract class Persona {
 		
 	}
 	
-	public Persona(String dni, String nombre, String apellido, String sexo, String nacionalidad, Date fechaNacimiento,
-			String email, String telefono, Direccion direccion) {
+	public Persona(Direccion direccion,String dni, String nombre, String apellido, String sexo, String nacionalidad, Date fechaNacimiento,
+			String email, String telefono) {
 		super();
+		this.direccion = direccion;
 		this.dni = dni;
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -33,11 +35,18 @@ public abstract class Persona {
 		this.fechaNacimiento = fechaNacimiento;
 		this.email = email;
 		this.telefono = telefono;
-		this.direccion = direccion;
 	}
 
 
 	///SETTERS AND GETTERS
+	
+	public Direccion getDireccion() {
+		return direccion;
+	}
+
+	public void setDireccion(Direccion direccion) {
+		this.direccion = direccion;
+	}
 	
 	public String getDni() {
 		return dni;
@@ -103,22 +112,18 @@ public abstract class Persona {
 		this.telefono = telefono;
 	}
 
-	public Direccion getDireccion() {
-		return direccion;
-	}
-
-	public void setDireccion(Direccion direccion) {
-		this.direccion = direccion;
-	}
-
-	///TO STRING
 	
+	///TO STRING
 	@Override
 	public String toString() {
-		return "Persona [dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido + ", sexo=" + sexo
-				+ ", nacionalidad=" + nacionalidad + ", fechaNacimiento=" + fechaNacimiento + ", email=" + email
-				+ ", telefono=" + telefono + ", direccion=" + direccion + "]";
+		return "Persona [direccion=" + direccion + ", dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido
+				+ ", sexo=" + sexo + ", nacionalidad=" + nacionalidad + ", fechaNacimiento=" + fechaNacimiento
+				+ ", email=" + email + ", telefono=" + telefono + "]";
 	}
 
+
+	
+	
+	
 	
 }
