@@ -12,7 +12,7 @@ public class Conexion {
 	{
 		try
 		{
-			this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_clinica","root","root");
+			this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbclinica?enabledTLSProtocols=TLSv1.2","root","root");
 			this.connection.setAutoCommit(false);
 		}
 		catch(Exception e)

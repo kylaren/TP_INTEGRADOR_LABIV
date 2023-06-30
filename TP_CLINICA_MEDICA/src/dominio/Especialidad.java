@@ -48,7 +48,11 @@ public class Especialidad {
 				+ ", descripcionEspecialidad=" + descripcionEspecialidad + "]";
 	}
 	
-	
+	public String formatoDDL() {
+		String opcion = "<option value='"+ idEspecialidad +"'> <b> "+  nombreEspecialidad  + ":</b> " + descripcionEspecialidad+"</option>";
+		return opcion;
+		
+	}
 	
 	
 }

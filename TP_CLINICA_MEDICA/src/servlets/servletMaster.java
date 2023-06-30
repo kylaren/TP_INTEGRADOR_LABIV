@@ -1,14 +1,19 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import javax.servlet.RequestDispatcher;
 
+import dominio.Medico;
+import daoImpl.MedicoDaoImpl;
 
 
 
@@ -19,6 +24,8 @@ import javax.servlet.RequestDispatcher;
 public class servletMaster extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
+	MedicoDaoImpl mDao = new MedicoDaoImpl();
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -69,7 +76,15 @@ public class servletMaster extends HttpServlet {
 			
 			//METODO PARA CARGAR ABML DE MEDICOS
 			
+			
+			
 			if(request.getParameter("master").equals("medicos")) {
+				
+				ArrayList<Medico> lista = new ArrayList<>();
+				lista = mDao.listarMedicos();
+				
+				request.setAttribute("listaM", lista);
+				
 				String aVisitar = "abmlMedicos";
 				request.setAttribute("sitio", aVisitar );
 				

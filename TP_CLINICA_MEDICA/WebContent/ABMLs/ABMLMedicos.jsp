@@ -1,3 +1,6 @@
+<%@ page import="dominio.Direccion"%>
+<%@ page import="dominio.Medico"%>
+<%@ page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -18,6 +21,18 @@
 
 		<h1> ABML de Medicos </h1>
 		<br>
+		
+		<% 
+			ArrayList<Medico> listaMedicos = null;
+			if(request.getAttribute("listaM")!=null)
+			{
+				listaMedicos = (ArrayList<Medico>) request.getAttribute("listaM");
+			}
+			
+		%>	
+		
+		<br>
+		
 		<div id=tablaWrapper>
 			<table border="1" id="tablaMedicos" class="table table-bordered">
 				<thead>
@@ -42,34 +57,41 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>  
-						<td>
-							 <a href="#">Modificar</a>
- 							 <a href="#">Eliminar</a> 
-						</td>
-						<td>1</td>
-						<td>12345678</td>
-						<td>Cosme</td>
-						<td>Fulanito</td>
-						<td>Hombre</td>
-						<td>Argentina</td>
-						<td>12/05/1990</td>
-						<td>Calle Falsa 123</td>
-						<td>San Justo</td>
-						<td>Buenos Aires</td>
-						<td>test@123.com</td>
-						<td>01234567</td>
-						<td>Testeador</td>
-						<td>Lunes</td>
-						<td>15:30</td>
-						
-					</tr>
+			       <%  if(listaMedicos!=null)
+					for(Medico m : listaMedicos) 
+					{
+					%>
+						<tr>  
+						  <%--   <form name="formulario" action="servletSeguro?idSeguro=<%=seguro.getId()%>" method="get"> --%> 
+						  		<td>
+									 <a href="servletMedico?master=formTurnos&id=<%=m.getId() %>"  >Modificar</a>
+		 							 <a href="servletMedico?id=<%=m.getId() %>">Eliminar</a> 
+								</td>
+								<td><%=m.getId() %>    <input type="hidden" name="idMedico" value="<%=m.getId()%>"> </td> 
+								<td><%=m.getDni() %></td>   
+								<td><%=m.getNombre() %></td>
+								<td><%=m.getApellido() %></td>
+								<td><%=m.getNacionalidad() %></td>
+								<td><%=m.getFechaNacimiento() %></td>
+								<td><%=m.getDireccion().getCalle() %> &nbsp; <%=m.getDireccion().getNumero() %> </td>
+								<td><%=m.getDireccion().getLocalidad() %></td> 
+								<td><%=m.getDireccion().getProvincia() %></td>
+								<td><%=m.getEmail() %></td>
+								<td><%=m.getTelefono() %></td>
+								<td><%=m.getEspecialidad().getNombreEspecialidad() %> FALTA DESARROLLAR</td>
+								<td>FALTA DESARROLLAR </td>
+								<td>FALTA DESARROLLAR</td> 
+						<%--  </form>  --%>
+						</tr>
+					<%  } %>
+					
+			
 			    </tbody>
 		
 			</table>
 		</div>
 		<br>
-		<button type="button" class="btn btn-dark">Agregar Medico</button>
+		<a href="href="servletMedico?master=formTurnos" class="btn btn-dark">Agregar Medico</a>
 			
 	
 	</body>
