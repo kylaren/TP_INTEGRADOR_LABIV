@@ -2,19 +2,28 @@ package daoImpl;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import java.util.List;
 
 import dao.PacienteDAO;
+import dominio.Direccion;
+import dominio.Estado;
 import dominio.Paciente;
 
 public class PacienteDaoImpl implements PacienteDAO {
-
+	
+	private static final String readall = "SELECT * FROM Pacientes";
+	
+	
+	
+	// INSERTAR REGISTRO PACIENTE
 	@Override
 	public boolean insert(Paciente paciente) {
-		
 		// Establece la conexión a la base de datos
 		Connection conexion = Conexion.getConexion().getSQLConexion();
 		boolean isInsertExitoso = false;
@@ -63,10 +72,9 @@ public class PacienteDaoImpl implements PacienteDAO {
 
 	
 	
-	
+	// ACTUALIZAR REGISTRO PACIENTE
 	@Override
 	public boolean update(Paciente paciente) {
-		
 		// Establece la conexión a la base de datos
 		Connection conexion = Conexion.getConexion().getSQLConexion();
 		boolean exito = false;
@@ -102,7 +110,6 @@ public class PacienteDaoImpl implements PacienteDAO {
 				exito = true;
 				System.out.println("El paciente ha sido actualizado correctamente.");
 			}  
-		    
 		} 
 		catch (SQLException e) 
 		{
@@ -113,21 +120,95 @@ public class PacienteDaoImpl implements PacienteDAO {
 					e1.printStackTrace();
 				}
 		}
-		return exito;    
+		return exito; 
 	}
 	
+	
 
+	//ELIMINAR REGISTRO PACIENTE
 	@Override
-	public boolean delete(int dni) {
-		return false;
-		// falta desarrollar
-		
+	public boolean delete(Paciente paciente_a_eliminar) {
+		// Establece la conexión a la base de datos
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		boolean exito = false;
+		try
+		{
+			// Llama al procedimiento almacenado
+			String sp = "CALL SP_EliminarPaciente(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			CallableStatement statement = conexion.prepareCall(sp);
+			
+			// Establece los valores de los parámetros en el procedimiento almacenado
+		    statement.setInt(1, paciente_a_eliminar.getId());
+		    
+		    // Ejecuta el procedimiento almacenado
+		    if(statement.executeUpdate() > 0)
+			{
+				conexion.commit();
+				exito = true;
+			}
+		}
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+		}
+		return exito;
 	}
 
+	
+	
+	//LISTAR REGISTROS PACIENTES
 	@Override
 	public List<Paciente> readAll() {
-		// falta desarrollar
-		return null;
+		PreparedStatement statement;
+		ResultSet resultSet; //Guarda el resultado de la query
+		ArrayList<Paciente> pacientes = new ArrayList<Paciente>();
+		Conexion conexion = Conexion.getConexion();
+		try 
+		{
+			statement = conexion.getSQLConexion().prepareStatement(readall);
+			resultSet = statement.executeQuery();
+			while(resultSet.next())
+			{
+				pacientes.add(getPaciente(resultSet));
+			}
+			resultSet.close();
+			statement.close();
+			conexion.cerrarConexion();
+		} 
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+		}
+		return pacientes;
+	}
+	
+	
+	private Paciente getPaciente(ResultSet resultSet) throws SQLException
+	{
+		  
+		  String calle = resultSet.getString("calle");
+		  String numero = resultSet.getString("numero");
+		  String localidad = resultSet.getString("localidad");
+		  String provincia = resultSet.getString("provincia");
+		  String pais = resultSet.getString("pais");
+		  String codigoPostal = resultSet.getString("codigo_postal");
+		  String dni = resultSet.getString("dni");
+		  String nombre = resultSet.getString("nombre");
+		  String apellido = resultSet.getString("apellido");
+		  String sexo = resultSet.getString("sexo");
+		  String nacionalidad = resultSet.getString("nacionalidad");
+		  Date fechaNacimiento = resultSet.getDate("fecha_nacimiento");
+		  String email = resultSet.getString("email");
+		  String telefono = resultSet.getString("telefono");
+		  int id = resultSet.getInt("id");
+		  int estado = resultSet.getInt("estado_id");
+		  
+		
+		// Crea objeto de tipo Direccion
+		  Direccion direccion = new Direccion(calle, numero, localidad, provincia, pais, codigoPostal);
+
+		// Crea objeto de tipo Paciente y lo devuelve
+		  return new Paciente(direccion, dni, nombre, apellido, sexo, nacionalidad, fechaNacimiento, email, telefono, id, estado);
 	}
 
 }

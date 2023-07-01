@@ -47,6 +47,7 @@
 				      <li class="nav-item">
 				        <a class="nav-link" href="servletMaster?master=asignarTurnos" type="submit" >Asignar Turnos</a>
 				      </li>
+				      
 				      <li class="nav-item dropdown">
 				        <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
 				          ABMLs
@@ -54,6 +55,17 @@
 				        <div class="dropdown-menu">
 				          <a class="dropdown-item" href="servletMaster?master=medicos"> ABML de Medicos </a>
 				          <a class="dropdown-item" href="servletMaster?master=pacientes" > ABML de Pacientes</a>
+					
+				        </div>
+				      </li>
+				      
+				      <li class="nav-item dropdown">
+				        <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+				          	Formularios
+				        </a>
+				        <div class="dropdown-menu">
+				          <a class="dropdown-item" href="servletMaster?master=medicos"> Agregar Medico </a>
+				          <a class="dropdown-item" href="servletMaster?master=agregarPaciente" > Agregar Paciente</a>
 					
 				        </div>
 				      </li>
@@ -147,11 +159,11 @@
 			<%
 			break;
 			
-		case "abmlPacientes":
+		case "formularioPaciente":
 			
 			%>
 			
-			<%@ include file="../ABMLs/ABMLPacientes.jsp" %>
+			<%@ include file="../Formularios/FormularioPaciente.jsp" %>
 			
 			<%
 			break;

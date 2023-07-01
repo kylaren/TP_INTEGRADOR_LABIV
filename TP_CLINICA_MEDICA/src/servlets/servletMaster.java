@@ -1,6 +1,9 @@
 package servlets;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -12,26 +15,25 @@ import javax.servlet.http.HttpSession;
 
 import javax.servlet.RequestDispatcher;
 
+import dominio.Direccion;
 import dominio.Medico;
+import dominio.Paciente;
 import daoImpl.MedicoDaoImpl;
+import daoImpl.PacienteDaoImpl;
 
 
 
-/**
- * Servlet implementation class MasterPageServlet
- */
+
 @WebServlet("/Layout/servletMaster")
 public class servletMaster extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	MedicoDaoImpl mDao = new MedicoDaoImpl();
+	PacienteDaoImpl pdaoI = new PacienteDaoImpl();
 	
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+    
     public servletMaster() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     
@@ -63,7 +65,7 @@ public class servletMaster extends HttpServlet {
 		        rdi.forward(request, response);
 			}
 			
-			//METODO PARA ASIGNAR TURNOS
+			//METODO PARA LISTAR TURNOS
 			
 			if(request.getParameter("master").equals("listarTurnos")) {
 				String aVisitar = "listarTurnos";
@@ -93,15 +95,31 @@ public class servletMaster extends HttpServlet {
 			}
 			
 			
-			//METODO PARA CARGAR ABML DE PACIENTES
+	// PACIENTES
 			
-			if(request.getParameter("master").equals("pacientes")) {
-				String aVisitar = "abmlPacientes";
+			//METODO PARA CARGAR UN PACIENTE
+			
+			if(request.getParameter("master").equals("agregarPaciente")) {
+				String aVisitar = "formularioPaciente";
 				request.setAttribute("sitio", aVisitar );
 				
 				RequestDispatcher rdi = request.getRequestDispatcher("/Layout/MasterPage.jsp");   
 		        rdi.forward(request, response);
 			}
+			
+			
+			
+			//METODO PARA LISTAR PACIENTES
+			
+			if(request.getParameter("master").equals("abmlPacientes")) {
+				ArrayList<Paciente> lista= (ArrayList<Paciente>) pdaoI.readAll();
+				
+				request.setAttribute("listaP", lista);
+				
+				RequestDispatcher rdi = request.getRequestDispatcher("/Layout/MasterPage.jsp");   
+		        rdi.forward(request, response);
+			}
+			
 			
 		}
 		
@@ -123,6 +141,58 @@ public class servletMaster extends HttpServlet {
 			RequestDispatcher rdi = request.getRequestDispatcher("/Layout/MasterPage.jsp");   
 	        rdi.forward(request, response);
         }
+        
+        
+     // BOTON AGREGAR PACIENTE 
+		
+		if(request.getParameter("btnAgregarPaciente")!= null) {
+			PacienteDaoImpl pdao = new PacienteDaoImpl();
+			
+			Paciente paciente = new Paciente();
+			
+			String fechaNacimientoString = request.getParameter("fechaNacPaciente");
+			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+			Date fechaNacimiento = null;
+			
+			try {
+			    fechaNacimiento = (Date) sdf.parse(fechaNacimientoString);
+			} catch (ParseException e) {
+			    e.printStackTrace();
+			}
+			
+			// setea la direccion
+				Direccion direccion = new Direccion();
+				direccion.setCalle(request.getParameter("callePaciente"));
+				direccion.setNumero(request.getParameter("numeroPaciente"));
+				direccion.setLocalidad(request.getParameter("localidadPaciente"));
+				direccion.setProvincia(request.getParameter("provinciaPaciente"));
+				direccion.setPais(request.getParameter("paisPaciente"));
+				direccion.setCodigoPostal(request.getParameter("codigoPostalPaciente"));
+			paciente.setDireccion(direccion);
+			
+			paciente.setDni(request.getParameter("dniPaciente"));
+			paciente.setNombre(request.getParameter("nombrePaciente"));
+			paciente.setApellido(request.getParameter("apellidoPaciente"));
+			paciente.setSexo(request.getParameter("sexoPaciente"));
+			paciente.setNacionalidad(request.getParameter("nacionalidadPaciente"));
+			paciente.setFechaNacimiento(fechaNacimiento);
+			paciente.setEmail(request.getParameter("emailPaciente"));
+			paciente.setTelefono(request.getParameter("telefonoPaciente"));
+			// seteo el estado 1 (visible)
+			paciente.setEstado(1); 
+			
+			
+			
+			pdao.insert(paciente);
+			
+			System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+			
+//			String aVisitar = "formularioPaciente";
+//			request.setAttribute("sitio", aVisitar );
+			
+			RequestDispatcher rdi = request.getRequestDispatcher("/Layout/MasterPage.jsp");   
+	        rdi.forward(request, response);
+		}
         
 		
 	
