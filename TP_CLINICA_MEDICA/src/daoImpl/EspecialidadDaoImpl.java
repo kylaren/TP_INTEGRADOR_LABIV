@@ -47,7 +47,7 @@ public class EspecialidadDaoImpl implements EspecialidadDAO {
 	        		lista.add(aListar);
 	        	}
 	        }
-	        conexion.close();
+	        //conexion.close();
         
 	    } 
 	    catch (SQLException e) 

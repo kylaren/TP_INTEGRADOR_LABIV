@@ -177,18 +177,23 @@ public class MedicoDaoImpl implements MedicoDAO{
 	@Override
 	public ArrayList<Medico> listarMedicos(){
 
+		/*
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		}catch(ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		Connection conexion = null;
+		
+		*/
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+	    
 	    
 		ArrayList<Medico> lista = new ArrayList<>();
 		
 	    try 
 	    {
-			conexion = Conexion.getConexion().getSQLConexion();
+
+
 
 	        // Crea la sentencia SQL para insertar el paciente
 			
@@ -198,7 +203,9 @@ public class MedicoDaoImpl implements MedicoDAO{
 	    			"U.Calle, U.Numero, U.Localidad, U.Provincia, U.Pais, U.CodigoPostal, P.Email, P.Telefono FROM Medicos M\r\n" + 
 	    			"INNER JOIN Personas P ON M.IdPersona = P.Id\r\n" + 
 	    			"INNER JOIN Ubicaciones U ON P.IdUbicacion = U.Id";
-	    	Statement st = conexion.createStatement();
+
+	    
+	    Statement st = conexion.createStatement();
 	        
 	        ResultSet rs = st.executeQuery(query);
 	        
