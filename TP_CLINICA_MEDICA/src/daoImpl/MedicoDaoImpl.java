@@ -182,22 +182,24 @@ public class MedicoDaoImpl implements MedicoDAO{
 		}catch(ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		Connection conexion = null;
+		Connection conexion = Conexion.getConexion().getSQLConexion();;
 	    
 		ArrayList<Medico> lista = new ArrayList<>();
 		
 	    try 
 	    {
-			conexion = Conexion.getConexion().getSQLConexion();
+
 
 	        // Crea la sentencia SQL para insertar el paciente
 			
 	
 			
-	    	String query = "Select M.ID, P.Dni, P.Nombre, P.Apellido, P.Sexo, P.Nacionalidad, P.FechaNacimiento, \r\n" + 
-	    			"U.Calle, U.Numero, U.Localidad, U.Provincia, U.Pais, U.CodigoPostal, P.Email, P.Telefono FROM Medicos M\r\n" + 
-	    			"INNER JOIN Personas P ON M.IdPersona = P.Id\r\n" + 
-	    			"INNER JOIN Ubicaciones U ON P.IdUbicacion = U.Id";
+	    	String query = "Select M.ID, P.Dni, P.Nombre, P.Apellido, P.Sexo, P.Nacionalidad, P.FechaNacimiento," + 
+	    			"	    			U.Calle, U.Numero, U.Localidad, U.Provincia, U.Pais, U.CodigoPostal," +
+	    			"					P.Email, P.Telefono, E.Nombre FROM Medicos M" + 
+	    			"	    			INNER JOIN Personas P ON M.IdPersona = P.Id" + 
+	    			"	    			INNER JOIN Ubicaciones U ON P.IdUbicacion = U.Id" + 
+	    			"					INNER JOIN Especialidades E ON M.IdEspecialidad = E.Id";
 	    	Statement st = conexion.createStatement();
 	        
 	        ResultSet rs = st.executeQuery(query);
@@ -222,6 +224,9 @@ public class MedicoDaoImpl implements MedicoDAO{
 				    aListar.setDireccion(direccion);
 				    aListar.setEmail(rs.getString("P.Email"));
 				    aListar.setTelefono(rs.getString("P.Telefono"));
+				    Especialidad especialidad = new Especialidad();
+				    especialidad.setNombreEspecialidad("E.Nombre");
+				    aListar.setEspecialidad(especialidad);
 		        		
 	        		lista.add(aListar);
 	        	}
