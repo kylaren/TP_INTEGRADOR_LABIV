@@ -63,7 +63,7 @@
 	  	
 			  <div class="form-group">
 			    <label for="fechaNacPaciente">Fecha de Nacimiento del Paciente</label>
-			    <input type="date" class="form-control" id="fechaNacPaciente" >
+			    <input type="date" class="form-control" name="fechaNacimiento" id="fechaNacPaciente" >
 			  </div>
 				  		
 	  	<!-- EMAIL PACIENTE -->

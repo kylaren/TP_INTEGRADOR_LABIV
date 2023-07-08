@@ -153,15 +153,17 @@ public class servletMaster extends HttpServlet {
 			
 			Paciente paciente = new Paciente();
 			
-			String fechaNacimientoString = request.getParameter("fechaNacPaciente");
-			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-			Date fechaNacimiento = null;
-			
-			try {
-			    fechaNacimiento = (Date) sdf.parse(fechaNacimientoString);
-			} catch (ParseException e) {
-			    e.printStackTrace();
-			}
+			String fechaNacimientoString = request.getParameter("fechaNacimiento");
+			// Convierte la fecha de String a java.sql.Date
+	        java.sql.Date fechaNacimiento = null;
+	        try {
+	            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	            java.util.Date utilFechaNacimiento = sdf.parse(fechaNacimientoString);
+	            fechaNacimiento = new java.sql.Date(utilFechaNacimiento.getTime());
+	        } catch (ParseException e) {
+	            e.printStackTrace();
+	        }
+	        
 			
 			// setea la direccion
 				Direccion direccion = new Direccion();
@@ -197,8 +199,6 @@ public class servletMaster extends HttpServlet {
 	        rdi.forward(request, response);
 		}
         
-		
-	
 	}
 
 }
