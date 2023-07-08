@@ -22,7 +22,7 @@ import daoImpl.MedicoDaoImpl;
 /**
  * Servlet implementation class servletMedico
  */
-@WebServlet("/Formularios/servletMedico")
+@WebServlet("/Layout/servletMedico")
 public class servletMedico extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -36,6 +36,29 @@ public class servletMedico extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		//REDIRECCION DE URLS
+		
+		//METODO PARA CARGAR FORMULARIO DE MEDICOS
+		
+		if(request.getParameter("master") != null) {
+			
+			if(request.getParameter("master").equals("formularioMedico")) {
+				
+				if(request.getParameter("id") != null) {
+					
+					
+				}
+				
+				String aVisitar = "formularioMedico";
+				request.setAttribute("sitio", aVisitar );
+				
+				RequestDispatcher rdi = request.getRequestDispatcher("/Layout/MasterPage.jsp");   
+		        rdi.forward(request, response);
+			}
+			
+			
+		}
+		
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
@@ -57,7 +80,7 @@ public class servletMedico extends HttpServlet {
 			java.util.Date FechaNacUtil;
 			java.sql.Date FechaNacSQL;
 			try {
-				FechaNacUtil = new SimpleDateFormat("dd/MM/yyyy").parse(request.getParameter("fechaNacimientoMedico"));
+				FechaNacUtil = new SimpleDateFormat("dd/MM/yyyy").parse(FechaNacimiento);
 				FechaNacSQL = new java.sql.Date(FechaNacUtil.getDate());
 				m.setFechaNacimiento(FechaNacSQL);
 			} catch (ParseException e) {

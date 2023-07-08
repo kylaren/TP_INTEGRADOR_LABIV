@@ -75,6 +75,7 @@ public class servletMaster extends HttpServlet {
 		        rdi.forward(request, response);
 			}
 			
+		// MEDICOS
 			
 			//METODO PARA CARGAR ABML DE MEDICOS
 			
@@ -85,6 +86,8 @@ public class servletMaster extends HttpServlet {
 				ArrayList<Medico> lista = new ArrayList<>();
 				lista = mDao.listarMedicos();
 				
+
+				
 				request.setAttribute("listaM", lista);
 				
 				String aVisitar = "abmlMedicos";
@@ -93,6 +96,8 @@ public class servletMaster extends HttpServlet {
 				RequestDispatcher rdi = request.getRequestDispatcher("/Layout/MasterPage.jsp");   
 		        rdi.forward(request, response);
 			}
+			
+		
 			
 			
 	// PACIENTES

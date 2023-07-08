@@ -48,6 +48,7 @@ public class Especialidad {
 				+ ", descripcionEspecialidad=" + descripcionEspecialidad + "]";
 	}
 	
+	///Para mostrar especialidades en un dropdown list
 	public String formatoDDL() {
 		String opcion = "<option value='"+ idEspecialidad +"'> <b> "+  nombreEspecialidad  + ":</b> " + descripcionEspecialidad+"</option>";
 		return opcion;

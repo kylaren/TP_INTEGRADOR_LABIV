@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,9 +16,40 @@ import dao.MedicoDAO;
 import dominio.Medico;
 import dominio.Direccion;
 import dominio.Especialidad;
+import dominio.Horario;
+import daoImpl.HorarioDaoImpl;
 
 public class MedicoDaoImpl implements MedicoDAO{
 
+	//------------------------
+	//---FUNCIONES PRIVADAS---
+	//------------------------
+	
+	//Obtiene medico desde el array
+	private Medico retornarMedicoEnArray(ArrayList<Medico> listaMedicos, int idMedico) {
+		for(Medico m : listaMedicos) {
+			if(m.getId() == idMedico) {
+				return m;
+			}
+		}
+		return null;
+	}
+	
+	
+	//Chequea si hay medico repetido en el array
+	private boolean esMedicoRepetido(ArrayList<Medico> listaMedicos, int idMedico) {
+		for(Medico m : listaMedicos) {
+			if(m.getId() == idMedico) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	//------------------------
+	//---FUNCIONES PUBLICAS---
+	//------------------------
+	
 	// ACTUALIZAR MEDICOS
 	
 	@Override
@@ -189,6 +221,7 @@ public class MedicoDaoImpl implements MedicoDAO{
 	    
 	    
 		ArrayList<Medico> lista = new ArrayList<>();
+		HorarioDaoImpl listaHorariaDao = new HorarioDaoImpl();
 		
 	    try 
 	    {
@@ -196,42 +229,75 @@ public class MedicoDaoImpl implements MedicoDAO{
 
 
 	        // Crea la sentencia SQL para insertar el paciente
-			
-	
-			
-	    	String query = "Select M.ID, P.Dni, P.Nombre, P.Apellido, P.Sexo, P.Nacionalidad, P.FechaNacimiento, \r\n" + 
-	    			"U.Calle, U.Numero, U.Localidad, U.Provincia, U.Pais, U.CodigoPostal, P.Email, P.Telefono FROM Medicos M\r\n" + 
-	    			"INNER JOIN Personas P ON M.IdPersona = P.Id\r\n" + 
-	    			"INNER JOIN Ubicaciones U ON P.IdUbicacion = U.Id";
 
-	    
-	    Statement st = conexion.createStatement();
+	    	String query = "Select M.ID, P.Dni, P.Nombre, P.Apellido, P.Sexo, P.Nacionalidad, P.FechaNacimiento, "+
+	    			"U.Calle, U.Numero, U.Localidad, U.Provincia, U.Pais, U.CodigoPostal, "+
+                    "P.Email, P.Telefono, E.Nombre, H.Dia, H.Inicio, H.Final FROM Medicos M "+
+	    			"INNER JOIN Personas P ON M.IdPersona = P.Id "+
+	    			"INNER JOIN Ubicaciones U ON P.IdUbicacion = U.Id "+
+					"INNER JOIN Especialidades E ON M.IdEspecialidad = E.Id "+
+                    "LEFT JOIN Horarios H ON H.IdMedico = M.Id "+
+					"ORDER BY M.Id";
+	    	Statement st = conexion.createStatement();
+
 	        
 	        ResultSet rs = st.executeQuery(query);
 	        
 	        while(rs.next()) {
 	        	
-		        	Medico aListar = new Medico();
-					aListar.setId(rs.getInt("M.ID"));
-					aListar.setDni(rs.getString("P.Dni"));
-					aListar.setNombre(rs.getString("P.Nombre"));
-					aListar.setApellido(rs.getString("P.Apellido"));
-					aListar.setSexo(rs.getString("P.Sexo"));
-					aListar.setNacionalidad(rs.getString("P.Nacionalidad"));
-					aListar.setFechaNacimiento(rs.getDate("P.FechaNacimiento"));
-					Direccion direccion = new Direccion();
-				    direccion.setCalle(rs.getString("U.Calle"));
-				    direccion.setNumero(rs.getString("U.Numero"));
-				    direccion.setLocalidad(rs.getString("U.Localidad"));
-				    direccion.setProvincia(rs.getString("U.Provincia"));
-				    direccion.setPais(rs.getString("U.Pais"));
-				    direccion.setCodigoPostal(rs.getString("U.CodigoPostal"));
-				    aListar.setDireccion(direccion);
-				    aListar.setEmail(rs.getString("P.Email"));
-				    aListar.setTelefono(rs.getString("P.Telefono"));
-		        		
+
+	        	//Verifica si el medico esta en el array de listados
+	        	if (esMedicoRepetido(lista, rs.getInt("M.ID"))) {
+	        		
+	        		//Si el medico ya esta en el array, va a expandir la lista de horarios de este
+	        		
+	        		Medico aAgregar = new Medico();
+	        		Horario horarioNuevo = new Horario();
+	        		aAgregar = retornarMedicoEnArray(lista, rs.getInt("M.ID"));
+	        		ArrayList<Horario>listaExpandida = aAgregar.getHorario();
+	        		horarioNuevo.setInicioJornada(LocalTime.parse(rs.getString("H.Inicio")));
+	        		horarioNuevo.setFinalJornada(LocalTime.parse(rs.getString("H.Final")));
+				    listaExpandida.add(horarioNuevo);
+				    aAgregar.setHorario(listaExpandida);
+				    lista.set(lista.size() - 1, aAgregar);
+	        		
+	        	} else {
+	        		//Si el medico no esta en el array, se lo agrega
+	        		
+	        		Medico aListar = new Medico();
+	        		Direccion direccion = new Direccion();
+	        		Especialidad especialidad = new Especialidad();
+	        		ArrayList<Horario> horarioLista = new ArrayList<>();
+	        		Horario horario = new Horario();
+	        		aListar.setId(rs.getInt("M.ID"));
+	        		aListar.setDni(rs.getString("P.Dni"));
+	        		aListar.setNombre(rs.getString("P.Nombre"));
+	        		aListar.setApellido(rs.getString("P.Apellido"));
+	        		aListar.setSexo(rs.getString("P.Sexo"));
+	        		aListar.setNacionalidad(rs.getString("P.Nacionalidad"));
+	        		aListar.setFechaNacimiento(rs.getDate("P.FechaNacimiento"));
+	        		direccion.setCalle(rs.getString("U.Calle"));
+	        		direccion.setNumero(rs.getString("U.Numero"));
+	        		direccion.setLocalidad(rs.getString("U.Localidad"));
+	        		direccion.setProvincia(rs.getString("U.Provincia"));
+	        		direccion.setPais(rs.getString("U.Pais"));
+	        		direccion.setCodigoPostal(rs.getString("U.CodigoPostal"));
+	        		aListar.setDireccion(direccion);
+	        		aListar.setEmail(rs.getString("P.Email"));
+	        		aListar.setTelefono(rs.getString("P.Telefono"));
+	        		especialidad.setNombreEspecialidad(rs.getString("E.Nombre"));
+	        		aListar.setEspecialidad(especialidad);
+	        		horario.setDia(rs.getString("H.Dia"));
+	        		horario.setInicioJornada(LocalTime.parse(rs.getString("H.Inicio")));
+	        		horario.setFinalJornada(LocalTime.parse(rs.getString("H.Final")));
+	        		horarioLista.add(horario);
+	        		aListar.setHorario(horarioLista);
+	        		
+
 	        		lista.add(aListar);
 	        	}
+
+        	}
 	        
 	        conexion.close();
 		    } 

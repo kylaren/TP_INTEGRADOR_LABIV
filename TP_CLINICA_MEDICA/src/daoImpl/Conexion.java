@@ -12,7 +12,8 @@ public class Conexion {
 	{
 		try
 		{
-			this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbclinica","root","root");
+
+			this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbclinica?useSSL=false&allowMultiQueries=true","root","root");
 			this.connection.setAutoCommit(false);
 		}
 		catch(Exception e)
@@ -22,11 +23,11 @@ public class Conexion {
 	}
 	
 	
-	public static Conexion getConexion() {
-	    if (instancia == null) {
-	        instancia = new Conexion();
-	    }
-	    return instancia;
+
+	public static Conexion getConexion()   
+	{								
+		instancia = new Conexion();
+		return instancia;
 	}
 
 	public Connection getSQLConexion() 

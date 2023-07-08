@@ -73,7 +73,6 @@ public class Horario {
 				+ ", finalJornada=" + finalJornada + "]";
 	}
 	
-	
-	
+
 	
 }

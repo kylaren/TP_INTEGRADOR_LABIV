@@ -158,6 +158,15 @@
 			
 			<%
 			break;
+		
+		case "formularioMedico":
+			
+			%>
+			
+			<%@ include file="../Formularios/FormularioMedico.jsp" %>
+			
+			<%
+			break;
 			
 		case "formularioPaciente":
 			
