@@ -22,13 +22,11 @@ public class Conexion {
 	}
 	
 	
-	public static Conexion getConexion()   
-	{								
-		if(instancia == null)
-		{
-			instancia = new Conexion();
-		}
-		return instancia;
+	public static Conexion getConexion() {
+	    if (instancia == null) {
+	        instancia = new Conexion();
+	    }
+	    return instancia;
 	}
 
 	public Connection getSQLConexion() 

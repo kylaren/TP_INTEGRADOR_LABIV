@@ -19,7 +19,7 @@ public class PacienteDaoImpl implements PacienteDAO {
 	
 	private static final String readall = "SELECT * FROM Pacientes";
 	
-	
+	Paciente paciente = new Paciente();
 	
 	// INSERTAR REGISTRO PACIENTE
 	@Override
@@ -54,18 +54,13 @@ public class PacienteDaoImpl implements PacienteDAO {
 	     // Ejecuta la sentencia SQL
 	        if(statement.executeUpdate() > 0)
 	        {
-				conexion.commit();
+				
 				isInsertExitoso = true;
 			}
 	    } 
 	    catch (SQLException e) 
 		{
 			e.printStackTrace();
-			try {
-				conexion.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
 		}
 	    return isInsertExitoso;
 	}
