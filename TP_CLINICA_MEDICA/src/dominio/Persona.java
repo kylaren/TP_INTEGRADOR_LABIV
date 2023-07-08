@@ -1,7 +1,7 @@
 package dominio;
 
+
 import java.sql.Date;
-import java.time.LocalTime;
 
 public abstract class Persona {
 	
@@ -23,9 +23,9 @@ public abstract class Persona {
 		
 	}
 	
-	public Persona(Direccion direccion,String dni, String nombre, String apellido, String sexo, String nacionalidad, Date fechaNacimiento,
+	public Persona(Direccion direccion,String dni, String nombre, String apellido, String sexo, String nacionalidad,Date fechaNacimiento,
 			String email, String telefono) {
-		super();
+		
 		this.direccion = direccion;
 		this.dni = dni;
 		this.nombre = nombre;
@@ -121,9 +121,5 @@ public abstract class Persona {
 				+ ", email=" + email + ", telefono=" + telefono + "]";
 	}
 
-
-	
-	
-	
 	
 }

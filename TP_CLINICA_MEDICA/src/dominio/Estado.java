@@ -1,6 +1,6 @@
 package dominio;
 
-public abstract class Estado {
+public class Estado {
 
 	private int id;
 	private String nombre;

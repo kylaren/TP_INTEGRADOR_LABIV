@@ -4,11 +4,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Formulario Paciente</title>
 </head>
 <body>
 	<h1>Agregar Paciente</h1>
-	<form>
+	<form action= "servletMaster" method= post>
 		<div class="form-group">
 		
 	  
@@ -66,48 +66,65 @@
 			    <input type="date" class="form-control" id="fechaNacPaciente" >
 			  </div>
 				  		
-	  
-	  	<!-- DIRECCION PACIENTE -->
+	  	<!-- EMAIL PACIENTE -->
 	  
 	  		<div class="form-group">
-			    <label for="direccionPaciente">Direccion del Paciente</label>
-			    <input type="text" class="form-control" id="direccionPaciente" >
+			    <label for="emailPaciente">Email del Paciente</label>
+			    <input type="text" class="form-control" id="emailPaciente" >
+		  	</div>
+	  	
+	  	<!-- TELEFONO PACIENTE -->
+	  
+	  		<div class="form-group">
+			    <label for="telefonoPaciente">Telefono del Paciente</label>
+			    <input type="text" class="form-control" id="telefonoPaciente" >
+		  	</div>
+		  	
+		<!-- CALLE PACIENTE -->
+	  
+	  		<div class="form-group">
+			    <label for="callePaciente">Calle del Paciente</label>
+			    <input type="text" class="form-control" id="callePaciente" >
 		  	</div>
 	  
+	  	<!-- NUMERO CASA PACIENTE -->
+	  
+	  		<div class="form-group">
+			    <label for="numeroPaciente">Numero de casa del Paciente</label>
+			    <input type="text" class="form-control" id="numeroPaciente" >
+		  	</div>
+	  	
 	  	<!-- LOCALIDAD PACIENTE -->
 	  
 	  		<div class="form-group">
 			    <label for="localidadPaciente">Localidad del Paciente</label>
 			    <input type="text" class="form-control" id="localidadPaciente" >
-		  	</div>	
-	  
-	  
+		  	</div>
+	  	
 	  	<!-- PROVINCIA PACIENTE -->
 	  	
 	  		<div class="form-group">
-			    <label for="provinciaPaciente">Localidad del Paciente</label>
+			    <label for="provinciaPaciente">Provincia del Paciente</label>
 			    <input type="text" class="form-control" id="provinciaPaciente" >
 		  	</div>	
-	  
 	  	
-	  
-	  	<!-- CORREO ELECTRONICO PACIENTE -->
-	  
-	  		<div class="form-group">
-			    <label for="mailPaciente">Correo Electronico del Paciente</label>
-			    <input type="email" class="form-control" id="mailPaciente" >
-		  	</div>	
-	  
-	  
-	  
-	  	<!-- TELEFONO PACIENTE -->
+	  	<!-- PAIS PACIENTE -->
 	  
 	  		<div class="form-group">
-			    <label for="telPaciente">Telefono del Paciente</label>
-			    <input type="number" class="form-control" id="telPaciente" >
+			    <label for="paisPaciente">Pais del Paciente</label>
+			    <input type="text" class="form-control" id="paisPaciente" >
+		  	</div>
+		  	
+		<!--  CODIGO POSTAL  PACIENTE -->
+	  	
+	  		<div class="form-group">
+			    <label for="codigoPostalPaciente">Codigo Postal del Paciente</label>
+			    <input type="text" class="form-control" id="codigoPostalPaciente" >
 		  	</div>	
+	  
+	  		
 	  			<br>
-	  			<button type="submit" class="btn btn-dark">Agregar Paciente</button>
+	  			<button type="submit" class="btn btn-dark" value="Agregar Paciente" name="btnAgregarPaciente">Agregar Paciente</button>
 	  
 	  	</div>
 
