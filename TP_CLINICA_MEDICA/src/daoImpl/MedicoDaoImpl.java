@@ -209,14 +209,9 @@ public class MedicoDaoImpl implements MedicoDAO{
 	@Override
 	public ArrayList<Medico> listarMedicos(){
 
-		/*
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-		}catch(ClassNotFoundException e) {
-			e.printStackTrace();
-		}
+
 		
-		*/
+		
 		Connection conexion = Conexion.getConexion().getSQLConexion();
 	    
 	    

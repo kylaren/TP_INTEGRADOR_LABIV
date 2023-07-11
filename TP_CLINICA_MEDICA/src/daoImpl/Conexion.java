@@ -26,8 +26,15 @@ public class Conexion {
 
 	public static Conexion getConexion()   
 	{								
-		instancia = new Conexion();
-		return instancia;
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			instancia = new Conexion();
+			return instancia;
+		}catch(ClassNotFoundException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	public Connection getSQLConexion() 
