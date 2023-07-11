@@ -250,6 +250,7 @@ public class MedicoDaoImpl implements MedicoDAO{
 	        		Horario horarioNuevo = new Horario();
 	        		aAgregar = retornarMedicoEnArray(lista, rs.getInt("M.ID"));
 	        		ArrayList<Horario>listaExpandida = aAgregar.getHorario();
+	        		horarioNuevo.setDia(rs.getString("H.Dia"));
 	        		horarioNuevo.setInicioJornada(LocalTime.parse(rs.getString("H.Inicio")));
 	        		horarioNuevo.setFinalJornada(LocalTime.parse(rs.getString("H.Final")));
 				    listaExpandida.add(horarioNuevo);
@@ -283,8 +284,14 @@ public class MedicoDaoImpl implements MedicoDAO{
 	        		especialidad.setNombreEspecialidad(rs.getString("E.Nombre"));
 	        		aListar.setEspecialidad(especialidad);
 	        		horario.setDia(rs.getString("H.Dia"));
-	        		horario.setInicioJornada(LocalTime.parse(rs.getString("H.Inicio")));
-	        		horario.setFinalJornada(LocalTime.parse(rs.getString("H.Final")));
+	        		if (rs.getString("H.Inicio")!= null) {
+		        		horario.setInicioJornada(LocalTime.parse(rs.getString("H.Inicio")));
+		        		horario.setFinalJornada(LocalTime.parse(rs.getString("H.Final")));
+	        		} else {
+		        		horario.setInicioJornada(LocalTime.parse("00:00"));
+		        		horario.setFinalJornada(LocalTime.parse("00:00"));
+	        		}
+
 	        		horarioLista.add(horario);
 	        		aListar.setHorario(horarioLista);
 	        		
