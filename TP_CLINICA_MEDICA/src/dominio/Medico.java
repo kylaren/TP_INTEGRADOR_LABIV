@@ -1,6 +1,6 @@
 package dominio;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Medico {
@@ -12,28 +12,25 @@ public class Medico {
 	private String apellido;
 	private String sexo;
 	private String nacionalidad;
-	private Date fechaNacimiento;
+	private LocalDate fechaNacimiento;
 	private Direccion direccion;
 	private String email;
 	private String telefono;
 	private Especialidad especialidad;
 	private ArrayList<Horario> horario;
 
+
+
 	@Override
 	public String toString() {
 		return "Medico [id=" + id + ", usuario=" + usuario + ", contrasena=" + contrasena + ", dni=" + dni + ", nombre="
 				+ nombre + ", apellido=" + apellido + ", sexo=" + sexo + ", nacionalidad=" + nacionalidad
-				+ ", fechaNacimiento=" + fechaNacimiento + ", direccion=" + direccion + ", email=" + email
-				+ ", telefono=" + telefono + ", especialidad=" + especialidad + ", horario=" + horario + "]";
-	}
-
-	public Medico()
-	{
-		
+				+ ", direccion=" + direccion + ", email=" + email + ", telefono=" + telefono + ", especialidad="
+				+ especialidad + ", horario=" + horario + "]";
 	}
 
 	public Medico(int id, String usuario, String contrasena, String dni, String nombre, String apellido, String sexo,
-			String nacionalidad, Date fechaNacimiento, Direccion direccion, String email, String telefono,
+			String nacionalidad, LocalDate fechaNacimiento, Direccion direccion, String email, String telefono,
 			Especialidad especialidad, ArrayList<Horario> horario) {
 		super();
 		this.id = id;
@@ -116,11 +113,11 @@ public class Medico {
 		this.nacionalidad = nacionalidad;
 	}
 
-	public Date getFechaNacimiento() {
+	public LocalDate getFechaNacimiento() {
 		return fechaNacimiento;
 	}
 
-	public void setFechaNacimiento(Date fechaNacimiento) {
+	public void setFechaNacimiento(LocalDate fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
@@ -162,5 +159,10 @@ public class Medico {
 
 	public void setHorario(ArrayList<Horario> horario) {
 		this.horario = horario;
+	}
+
+	public Medico()
+	{
+		
 	}
 }

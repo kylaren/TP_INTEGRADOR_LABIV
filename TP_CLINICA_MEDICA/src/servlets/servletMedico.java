@@ -8,11 +8,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.Date;
+import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.TimeZone;
 
 import dominio.Especialidad;
 import dominio.Direccion;
@@ -77,15 +79,14 @@ public class servletMedico extends HttpServlet {
 			
 			String FechaNacimiento = request.getParameter("fechaNacimientoMedico");
 			
-			java.util.Date FechaNacUtil;
-			java.sql.Date FechaNacSQL;
+			LocalDate FechaNacUtil;
+			
 			try {
-				FechaNacUtil = new SimpleDateFormat("dd/MM/yyyy").parse(FechaNacimiento);
-				FechaNacSQL = new java.sql.Date(FechaNacUtil.getDate());
-				m.setFechaNacimiento(FechaNacSQL);
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+			    FechaNacUtil = LocalDate.parse(FechaNacimiento, formatter);
+			    m.setFechaNacimiento(FechaNacUtil);
+			} catch (DateTimeParseException e) {
+			    e.printStackTrace();
 			}
 
 			

@@ -71,7 +71,7 @@ public class MedicoDaoImpl implements MedicoDAO{
 			        statement.setString(3, medico.getApellido());
 			        statement.setString(4, medico.getSexo());
 			        statement.setString(5, medico.getNacionalidad());
-			        statement.setDate(6, new java.sql.Date(medico.getFechaNacimiento().getTime()));
+			        statement.setDate(6, java.sql.Date.valueOf(medico.getFechaNacimiento()));
 			        statement.setString(7, medico.getEmail());
 			        statement.setString(8, medico.getTelefono());
 			        
@@ -129,7 +129,7 @@ public class MedicoDaoImpl implements MedicoDAO{
 	        statement.setString(3, medico.getApellido());
 	        statement.setString(4, medico.getSexo());
 	        statement.setString(5, medico.getNacionalidad());
-	        statement.setDate(6, new java.sql.Date(medico.getFechaNacimiento().getTime()));
+	        statement.setDate(6, java.sql.Date.valueOf(medico.getFechaNacimiento()));
 	        statement.setString(7, medico.getEmail());
 	        statement.setString(8, medico.getTelefono());
 	        
@@ -271,7 +271,7 @@ public class MedicoDaoImpl implements MedicoDAO{
 	        		aListar.setApellido(rs.getString("P.Apellido"));
 	        		aListar.setSexo(rs.getString("P.Sexo"));
 	        		aListar.setNacionalidad(rs.getString("P.Nacionalidad"));
-	        		aListar.setFechaNacimiento(rs.getDate("P.FechaNacimiento"));
+	        		aListar.setFechaNacimiento(rs.getDate("P.FechaNacimiento").toLocalDate());
 	        		direccion.setCalle(rs.getString("U.Calle"));
 	        		direccion.setNumero(rs.getString("U.Numero"));
 	        		direccion.setLocalidad(rs.getString("U.Localidad"));
