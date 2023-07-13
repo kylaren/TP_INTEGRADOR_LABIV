@@ -8,10 +8,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.TimeZone;
@@ -20,6 +23,7 @@ import dominio.Especialidad;
 import dominio.Direccion;
 import dominio.Medico;
 import daoImpl.MedicoDaoImpl;
+import dominio.Horario;
 
 /**
  * Servlet implementation class servletMedico
@@ -76,6 +80,8 @@ public class servletMedico extends HttpServlet {
 			Medico m  =  new Medico();
 			Direccion md = new Direccion();
 			Especialidad me = new Especialidad();
+			ArrayList<Horario> mlh = new ArrayList<>();
+			Horario mh = new Horario();
 			
 			String FechaNacimiento = request.getParameter("fechaNacimientoMedico");
 			
@@ -89,14 +95,17 @@ public class servletMedico extends HttpServlet {
 			    e.printStackTrace();
 			}
 
-			
-			
+			mh.setDia(request.getParameter("diaMedico"));
+			mh.setInicioJornada(LocalTime.parse(request.getParameter("inicioJornadaMedico")));
+			mh.setFinalJornada(LocalTime.parse(request.getParameter("finalJornadaMedico")));
+			mlh.add(mh);
+			m.setHorario(mlh);
 			me.setIdEspecialidad(Integer.parseInt(request.getParameter("especialidadMedico")));
 			md.setCalle(request.getParameter("calleMedico"));
 			md.setCodigoPostal(request.getParameter("codigoPostalMedico"));
 			md.setLocalidad(request.getParameter("localidadMedico"));
 			md.setNumero(request.getParameter("numeroMedico"));
-			md.setPais(request.getParameter("paisMedico"));
+			md.setPais("Argentina");
 			md.setProvincia(request.getParameter("provinciaMedico"));
 			m.setApellido(request.getParameter("apellidoMedico"));
 			m.setContrasena(request.getParameter("contrasenaMedico"));
@@ -104,7 +113,6 @@ public class servletMedico extends HttpServlet {
 			m.setDni(request.getParameter("dniMedico"));
 			m.setEmail(request.getParameter("emailMedico"));
 			m.setEspecialidad(me);
-
 			m.setNacionalidad(request.getParameter("nacionalidadMedico"));
 			m.setNombre(request.getParameter("nombreMedico"));
 			m.setSexo(request.getParameter("sexoMedico"));

@@ -120,7 +120,7 @@ public class MedicoDaoImpl implements MedicoDAO{
 	    try 
 	    {
 	        // Crea la sentencia SQL para insertar el medico
-	        String spIngresarPaciente = "CALL SP_IngresarMedico(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	        String spIngresarPaciente = "CALL SP_IngresarMedico(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	        CallableStatement statement = conexion.prepareCall(spIngresarPaciente);
 
 	        // Establece los valores de los parámetros en la sentencia SQL
@@ -142,6 +142,10 @@ public class MedicoDaoImpl implements MedicoDAO{
 	        statement.setInt(15, medico.getEspecialidad().getIdEspecialidad());
 	        statement.setString(16, medico.getUsuario() );
 	        statement.setString(17, medico.getContrasena());
+	        statement.setString(18, medico.getHorario().get(0).getDia());
+	        statement.setTime(19, java.sql.Time.valueOf(medico.getHorario().get(0).getInicioJornada()));
+	        statement.setTime(20, java.sql.Time.valueOf(medico.getHorario().get(0).getFinalJornada()));
+	        
 	        
 	        
 	        
