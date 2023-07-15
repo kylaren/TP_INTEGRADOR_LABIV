@@ -259,7 +259,7 @@
 		
 		 
 	  <br>
-	   <input type="submit" class="btn btn-dark" name="btnAgregar" value="<% if(aModificar != null){ %> Modificar Medico <% }else{ %>  'Agregar Medico' <% } %>">
+	   <input type="submit" class="btn btn-dark" name="btnAgregar" value="<% if(aModificar != null){ %>Modificar Medico<% }else{ %>Agregar Medico<% } %>">
 	  
 	  </div>
 
