@@ -220,7 +220,7 @@ public class MedicoDaoImpl implements MedicoDAO{
 	    
 	    
 		ArrayList<Medico> lista = new ArrayList<>();
-		HorarioDaoImpl listaHorariaDao = new HorarioDaoImpl();
+
 		
 	    try 
 	    {
@@ -330,7 +330,7 @@ public class MedicoDaoImpl implements MedicoDAO{
 		Medico aDevolver = new Medico();
 
 		try {
-			String query = "	Select M.ID, P.Dni, P.Nombre, P.Apellido, P.Sexo, P.Nacionalidad, P.FechaNacimiento," + 
+			String query = "	Select M.ID, M.Usuario, M.Contrasena, P.Dni, P.Nombre, P.Apellido, P.Sexo, P.Nacionalidad, P.FechaNacimiento," + 
 					"						U.Calle, U.Numero, U.Localidad, U.Provincia, U.Pais, U.CodigoPostal," + 
 					"						P.Email, P.Telefono, E.Nombre FROM Medicos M" + 
 					"						INNER JOIN Personas P ON M.IdPersona = P.Id" + 
@@ -351,6 +351,8 @@ public class MedicoDaoImpl implements MedicoDAO{
 					Direccion direccion = new Direccion();
 	        		Especialidad especialidad = new Especialidad();
 	        		aDevolver.setId(rs.getInt("M.ID"));
+	        		aDevolver.setUsuario(rs.getString("M.Usuario"));
+	        		aDevolver.setContrasena(rs.getString("M.Contrasena"));
 					aDevolver.setDni(rs.getString("P.Dni"));
 					aDevolver.setNombre(rs.getString("P.Nombre"));
 					aDevolver.setApellido(rs.getString("P.Apellido"));
@@ -368,6 +370,7 @@ public class MedicoDaoImpl implements MedicoDAO{
 	        		aDevolver.setTelefono(rs.getString("P.Telefono"));
 	        		especialidad.setNombreEspecialidad(rs.getString("E.Nombre"));
 	        		aDevolver.setEspecialidad(especialidad);
+	        	
 					
 				    break;
 				    

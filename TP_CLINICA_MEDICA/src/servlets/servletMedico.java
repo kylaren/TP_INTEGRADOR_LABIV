@@ -95,8 +95,8 @@ public class servletMedico extends HttpServlet {
 		if(request.getParameter("btnAgregar")!=null)
 		{
 			String boton = request.getParameter("btnAgregar");
-			//FUNCION PARA AGREGAR MEDICO
-			if (boton.equals("Agregar Medico")) {
+
+				//LECTURA DE FORMULARIO
 			
 				MedicoDaoImpl mDao = new MedicoDaoImpl();
 				
@@ -118,11 +118,7 @@ public class servletMedico extends HttpServlet {
 				    e.printStackTrace();
 				}
 
-				mh.setDia(request.getParameter("diaMedico"));
-				mh.setInicioJornada(LocalTime.parse(request.getParameter("inicioJornadaMedico")));
-				mh.setFinalJornada(LocalTime.parse(request.getParameter("finalJornadaMedico")));
-				mlh.add(mh);
-				m.setHorario(mlh);
+			
 				me.setIdEspecialidad(Integer.parseInt(request.getParameter("especialidadMedico")));
 				md.setCalle(request.getParameter("calleMedico"));
 				md.setCodigoPostal(request.getParameter("codigoPostalMedico"));
@@ -142,7 +138,25 @@ public class servletMedico extends HttpServlet {
 				m.setTelefono(request.getParameter("telefonoMedico"));
 				m.setUsuario(request.getParameter("usuarioMedico"));
 				
-				mDao.insertarMedico(m);
+				//FUNCION PARA AGREGAR MEDICO
+				if (boton.equals("Agregar Medico")) 
+				{
+					//VALORES PARA INSERTAR QUE NO ESTAN PARA MODIFICAR
+					mh.setDia(request.getParameter("diaMedico"));
+					mh.setInicioJornada(LocalTime.parse(request.getParameter("inicioJornadaMedico")));
+					mh.setFinalJornada(LocalTime.parse(request.getParameter("finalJornadaMedico")));
+					mlh.add(mh);
+					m.setHorario(mlh);
+					//FUNCION MAGICA
+					mDao.insertarMedico(m);
+				} 
+				 //FUNCION PARA MODIFICAR MEDICO
+				else if(boton.equals("Modificar Medico")) 
+				{
+					mDao.actualizarMedico(m);
+				}
+				
+
 				
 				String aVisitar = "abmlMedicos";
 				request.setAttribute("sitio", aVisitar );
@@ -150,9 +164,8 @@ public class servletMedico extends HttpServlet {
 				RequestDispatcher rdi = request.getRequestDispatcher("/Layout/MasterPage.jsp");   
 		        rdi.forward(request, response);
 				
-			} else if(boton.equals("Modificar Medico")) {
-				
-			}
+		       
+			 
 			
 		
 		}
