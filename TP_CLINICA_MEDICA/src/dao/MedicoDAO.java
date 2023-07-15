@@ -11,6 +11,6 @@ public interface MedicoDAO {
     boolean borrarMedico(int idEliminar);
     
     ArrayList<Medico> listarMedicos();
-    //Medico buscarMedico(int idBusqueda);
+    Medico buscarMedico(int idBusqueda);
 	
 }

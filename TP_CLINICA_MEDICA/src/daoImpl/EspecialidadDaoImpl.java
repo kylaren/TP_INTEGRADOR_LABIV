@@ -28,7 +28,7 @@ public class EspecialidadDaoImpl implements EspecialidadDAO {
 		
 	    try 
 	    {
-			conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbclinica","root","root");
+			conexion = Conexion.getConexion().getSQLConexion();
 
 	        // Crea la sentencia SQL para insertar el paciente
 	    	String query = "SELECT Id, Nombre, Descripcion, Estado FROM Especialidades";

@@ -321,62 +321,62 @@ public class MedicoDaoImpl implements MedicoDAO{
 	  
 	}
 	
-	/*
-	// BUSCAR MEDICOS
+
 	@Override
 	public Medico buscarMedico(int idBusqueda){
+
+		Connection conexion = Conexion.getConexion().getSQLConexion();
 		
 		Medico aDevolver = new Medico();
-		
+
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-		} catch(ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		
-		Connection conn = null;
-		try {
-			conn = DriverManager.getConnection(host + dbName, user, pass);
-			Statement st = conn.createStatement();
+			String query = "	Select M.ID, P.Dni, P.Nombre, P.Apellido, P.Sexo, P.Nacionalidad, P.FechaNacimiento," + 
+					"						U.Calle, U.Numero, U.Localidad, U.Provincia, U.Pais, U.CodigoPostal," + 
+					"						P.Email, P.Telefono, E.Nombre FROM Medicos M" + 
+					"						INNER JOIN Personas P ON M.IdPersona = P.Id" + 
+					"						INNER JOIN Ubicaciones U ON P.IdUbicacion = U.Id" + 
+					"						INNER JOIN Especialidades E ON M.IdEspecialidad = E.Id" + 
+					"						WHERE M.Id= " + String.valueOf(idBusqueda);
 			
-			ResultSet rs = st.executeQuery(""); // AGREGAR LA CONSULTA DEL PACIENTE PARA OBTENER SUS DATOS
+	    	Statement st = conexion.createStatement();
+	        ResultSet rs = st.executeQuery(query);
 			
 			while(rs.next()) {
 				
-				int idActual = rs.getInt("idMedico");
+				int idActual = rs.getInt("M.ID");
 				
+
 				if(idActual == idBusqueda) {
 					
-		
-					aDevolver.setId(rs.getInt("idPaciente"));
-					aDevolver.setDni(rs.getString("dni"));
-					aDevolver.setNombre(rs.getString("nombre"));
-					aDevolver.setApellido(rs.getString("apellido"));
-					aDevolver.setSexo(rs.getString("sexo"));
-					aDevolver.setNacionalidad(rs.getString("nacionalidad"));
-					aDevolver.setFechaNacimiento(rs.getDate("fechaNacimiento"));
 					Direccion direccion = new Direccion();
-				    direccion.setCalle(rs.getString("calle"));
-				    direccion.setNumero(rs.getString("numero"));
-				    direccion.setLocalidad(rs.getString("localidad"));
-				    direccion.setProvincia(rs.getString("provincia"));
-				    direccion.setPais(rs.getString("pais"));
-				    direccion.setCodigoPostal(rs.getString("codigoPostal"));
-				    aDevolver.setDireccion(direccion);
-				    aDevolver.setCorreoElectronico(rs.getString("correoElectronico"));
-				    aDevolver.setTelefono(rs.getString("telefono"));
+	        		Especialidad especialidad = new Especialidad();
+	        		aDevolver.setId(rs.getInt("M.ID"));
+					aDevolver.setDni(rs.getString("P.Dni"));
+					aDevolver.setNombre(rs.getString("P.Nombre"));
+					aDevolver.setApellido(rs.getString("P.Apellido"));
+					aDevolver.setSexo(rs.getString("P.Sexo"));
+					aDevolver.setNacionalidad(rs.getString("P.Nacionalidad"));
+					aDevolver.setFechaNacimiento(rs.getDate("P.FechaNacimiento").toLocalDate());
+	        		direccion.setCalle(rs.getString("U.Calle"));
+	        		direccion.setNumero(rs.getString("U.Numero"));
+	        		direccion.setLocalidad(rs.getString("U.Localidad"));
+	        		direccion.setProvincia(rs.getString("U.Provincia"));
+	        		direccion.setPais(rs.getString("U.Pais"));
+	        		direccion.setCodigoPostal(rs.getString("U.CodigoPostal"));
+	        		aDevolver.setDireccion(direccion);
+	        		aDevolver.setEmail(rs.getString("P.Email"));
+	        		aDevolver.setTelefono(rs.getString("P.Telefono"));
+	        		especialidad.setNombreEspecialidad(rs.getString("E.Nombre"));
+	        		aDevolver.setEspecialidad(especialidad);
 					
 				    break;
 				    
 				}
-				else {
-					
-					
-				}
+
 
 			}
 			
-			conn.close();
+			conexion.close();
 			
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -384,7 +384,6 @@ public class MedicoDaoImpl implements MedicoDAO{
 		return aDevolver;
 	}
 
-	 */
 	 
 	 
 	

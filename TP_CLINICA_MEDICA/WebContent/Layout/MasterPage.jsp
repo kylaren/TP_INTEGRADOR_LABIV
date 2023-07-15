@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     
@@ -38,6 +39,7 @@
 				<!-- DEPENDIENDO DE USUARIO LOGUEADO SE MODIFICA LO MOSTRADO EN EL NAVBAR  -->
 				<form class="form-inline d-flex w-100 justify-content-between" action="servletMaster" method="post">
 				<%
+					
 					String tipoUsuario = (String) session.getAttribute("tipoUsuario");		
 					if (tipoUsuario != null && tipoUsuario.equals("admin"))  {  
 				%>

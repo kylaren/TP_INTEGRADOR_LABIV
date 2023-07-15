@@ -47,13 +47,7 @@ public class Especialidad {
 		return "Especialidad [idEspecialidad=" + idEspecialidad + ", nombreEspecialidad=" + nombreEspecialidad
 				+ ", descripcionEspecialidad=" + descripcionEspecialidad + "]";
 	}
-	
-	///Para mostrar especialidades en un dropdown list
-	public String formatoDDL() {
-		String opcion = "<option value='"+ idEspecialidad +"'> <b> "+  nombreEspecialidad  + ":</b> " + descripcionEspecialidad+"</option>";
-		return opcion;
-		
-	}
+
 	
 	
 }
