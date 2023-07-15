@@ -94,7 +94,7 @@ public class servletMedico extends HttpServlet {
 	
 		if(request.getParameter("btnAgregar")!=null)
 		{
-			String boton = request.getParameter("btnAgregar");
+				String boton = request.getParameter("btnAgregar");
 
 				//LECTURA DE FORMULARIO
 			
@@ -139,7 +139,7 @@ public class servletMedico extends HttpServlet {
 				m.setUsuario(request.getParameter("usuarioMedico"));
 				
 				//FUNCION PARA AGREGAR MEDICO
-				if (boton.equals("Agregar Medico")) 
+				if (boton.contains("Agregar Medico")) 
 				{
 					//VALORES PARA INSERTAR QUE NO ESTAN PARA MODIFICAR
 					mh.setDia(request.getParameter("diaMedico"));
@@ -151,7 +151,7 @@ public class servletMedico extends HttpServlet {
 					mDao.insertarMedico(m);
 				} 
 				 //FUNCION PARA MODIFICAR MEDICO
-				else if(boton.equals("Modificar Medico")) 
+				else if(boton.contains("Modificar Medico")) 
 				{
 					mDao.actualizarMedico(m);
 				}

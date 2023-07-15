@@ -108,7 +108,7 @@
 	  	
 			<div class="form-group">
 			    <label for="fechaNacMedico">Fecha de Nacimiento</label>
-			    <input type="date" class="form-control" name="fechaNacimientoMedico" value="<%= (aModificar != null) ? aModificar.getFechaNacimiento().format(formatoFecha) : "" %>">
+			    <input type="text" class="form-control datepicker" name="fechaNacimientoMedico" value="<%= (aModificar != null) ? aModificar.getFechaNacimiento().format(formatoFecha) : "" %>">
 			</div>
 				  		
 	  	<!-- CALLE Medico -->
