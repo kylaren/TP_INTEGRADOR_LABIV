@@ -158,8 +158,10 @@ public class servletMedico extends HttpServlet {
 					mDao.actualizarMedico(m);
 				}
 				
-
-				
+				ArrayList<Medico> lista = new ArrayList<>();
+				lista = mDao.listarMedicos();
+				request.setAttribute("listaM", lista);
+		
 				String aVisitar = "abmlMedicos";
 				request.setAttribute("sitio", aVisitar );
 				
