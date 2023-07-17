@@ -71,8 +71,41 @@
 						<tr>  
 						  <%--   <form name="formulario" action="servletSeguro?idSeguro=<%=seguro.getId()%>" method="get"> --%> 
 						  		<td>
-									 <a href="servletMedico?master=formularioMedico&id=<%=m.getId() %>"  >Modificar</a>
-		 							 <a href="servletMedico?funcion=borrar&id=<%=m.getId() %>">Eliminar</a> 
+									 <a href="servletMedico?master=formularioMedico&id=<%=m.getId() %>"  >
+									 <button type="button" class="btn btn-link">Modificar</button>
+									 </a>
+									 <button type="button" class="btn btn-link" data-toggle="modal" data-target="#modalEliminar<%=m.getId()%>">
+									  Eliminar
+									</button>
+									
+
+									
+									<!-- Modal -->
+
+																		
+									<div class="modal fade" id="modalEliminar<%=m.getId()%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+									  <div class="modal-dialog">
+									    <div class="modal-content">
+									      <div class="modal-header">
+									        <h5 class="modal-title" id="exampleModalLabel">Eliminacion del medico: <%=m.getNombre() %>&nbsp;<%=m.getApellido() %> </h5>
+									        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									          <span aria-hidden="true">&times;</span>
+									        </button>
+									      </div>
+									      <div class="modal-body">
+									      		¿Esta seguro de que desea eliminar el siguiente medico: <%=m.getNombre() %>&nbsp;<%=m.getApellido() %> ?
+									      </div>
+									      <div class="modal-footer">
+									        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+									        <form method="post" action="servletMedico">
+									        	<button type="submit" class="btn btn-danger" name="btnEliminar" value="<%=m.getId()%>">Eliminar</button>
+									        </form>
+									      </div>
+
+									    </div>
+									  </div>
+									</div>
+		 						
 								</td>
 								<td><%=m.getId() %>    <input type="hidden" name="idMedico" value="<%=m.getId()%>"> </td> 
 								<td><%=m.getDni() %></td>   

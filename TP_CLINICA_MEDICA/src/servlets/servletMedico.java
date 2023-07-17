@@ -39,8 +39,29 @@ public class servletMedico extends HttpServlet {
         super();
 
     }
+    
+    //ATRIBUTOS DEL SERVLET
+    
+	private MedicoDaoImpl mDao = new MedicoDaoImpl();
+    
+    //FUNCIONES INTRINSECAS DEL SERVLET
+    
+    private void redireccionarABML(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		ArrayList<Medico> lista = new ArrayList<>();
+		lista = mDao.listarMedicos();
+		request.setAttribute("listaM", lista);
+
+		String aVisitar = "abmlMedicos";
+		request.setAttribute("sitio", aVisitar );
+		
+		RequestDispatcher rdi = request.getRequestDispatcher("/Layout/MasterPage.jsp");   
+        rdi.forward(request, response);
+		
+    }
 
 
+    //FUNCIONES PARA TRABAJAR CON LA PAGINA
+    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		//REDIRECCION DE URLS
@@ -90,6 +111,16 @@ public class servletMedico extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+
+		
+		//METODO PARA DAR BAJA LOGICA A UN MEDICO
+		if(request.getParameter("btnEliminar")!=null) {
+			int aEliminar = Integer.parseInt(request.getParameter("btnEliminar"));
+			
+			mDao.borrarMedico(aEliminar);
+			redireccionarABML(request, response);
+		}
+		
 		//METODO PARA AGREGAR Y/O MODIFICAR MEDICO
 	
 		if(request.getParameter("btnAgregar")!=null)
@@ -98,7 +129,7 @@ public class servletMedico extends HttpServlet {
 
 				//LECTURA DE FORMULARIO
 			
-				MedicoDaoImpl mDao = new MedicoDaoImpl();
+
 				
 				Medico m  =  new Medico();
 				Direccion md = new Direccion();
@@ -158,16 +189,7 @@ public class servletMedico extends HttpServlet {
 					mDao.actualizarMedico(m);
 				}
 				
-				ArrayList<Medico> lista = new ArrayList<>();
-				lista = mDao.listarMedicos();
-				request.setAttribute("listaM", lista);
-		
-				String aVisitar = "abmlMedicos";
-				request.setAttribute("sitio", aVisitar );
-				
-				RequestDispatcher rdi = request.getRequestDispatcher("/Layout/MasterPage.jsp");   
-		        rdi.forward(request, response);
-				
+				redireccionarABML(request, response);
 		       
 			 
 			

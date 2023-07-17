@@ -231,7 +231,7 @@ public class MedicoDaoImpl implements MedicoDAO{
 
 	    	String query = "Select M.ID, P.Dni, P.Nombre, P.Apellido, P.Sexo, P.Nacionalidad, P.FechaNacimiento, "+
 	    			"U.Calle, U.Numero, U.Localidad, U.Provincia, U.Pais, U.CodigoPostal, "+
-                    "P.Email, P.Telefono, E.Nombre, H.Dia, H.Inicio, H.Final FROM Medicos M "+
+                    "P.Email, P.Telefono, E.Nombre, H.Dia, H.Inicio, H.Final, M.Estado FROM Medicos M "+
 	    			"INNER JOIN Personas P ON M.IdPersona = P.Id "+
 	    			"INNER JOIN Ubicaciones U ON P.IdUbicacion = U.Id "+
 					"INNER JOIN Especialidades E ON M.IdEspecialidad = E.Id "+
@@ -243,65 +243,68 @@ public class MedicoDaoImpl implements MedicoDAO{
 	        ResultSet rs = st.executeQuery(query);
 	        
 	        while(rs.next()) {
-	        	
+	        	//VERIFICACION DE ESTADO
+	        	if(rs.getBoolean("M.Estado")) {
+		        	//Verifica si el medico esta en el array de listados
+		        	if (esMedicoRepetido(lista, rs.getInt("M.ID"))) {
+		        		
+		        		//Si el medico ya esta en el array, va a expandir la lista de horarios de este
+		        		
+		        		Medico aAgregar = new Medico();
+		        		Horario horarioNuevo = new Horario();
+		        		aAgregar = retornarMedicoEnArray(lista, rs.getInt("M.ID"));
+		        		ArrayList<Horario>listaExpandida = aAgregar.getHorario();
+		        		horarioNuevo.setDia(rs.getString("H.Dia"));
+		        		horarioNuevo.setInicioJornada(LocalTime.parse(rs.getString("H.Inicio")));
+		        		horarioNuevo.setFinalJornada(LocalTime.parse(rs.getString("H.Final")));
+					    listaExpandida.add(horarioNuevo);
+					    aAgregar.setHorario(listaExpandida);
+					    lista.set(lista.size() - 1, aAgregar);
+		        		
+		        	} else {
+		        		//Si el medico no esta en el array, se lo agrega
+		        		
+		        		Medico aListar = new Medico();
+		        		Direccion direccion = new Direccion();
+		        		Especialidad especialidad = new Especialidad();
+		        		ArrayList<Horario> horarioLista = new ArrayList<>();
+		        		Horario horario = new Horario();
+		        		aListar.setId(rs.getInt("M.ID"));
+		        		aListar.setDni(rs.getString("P.Dni"));
+		        		aListar.setNombre(rs.getString("P.Nombre"));
+		        		aListar.setApellido(rs.getString("P.Apellido"));
+		        		aListar.setSexo(rs.getString("P.Sexo"));
+		        		aListar.setNacionalidad(rs.getString("P.Nacionalidad"));
+		        		aListar.setFechaNacimiento(rs.getDate("P.FechaNacimiento").toLocalDate());
+		        		direccion.setCalle(rs.getString("U.Calle"));
+		        		direccion.setNumero(rs.getString("U.Numero"));
+		        		direccion.setLocalidad(rs.getString("U.Localidad"));
+		        		direccion.setProvincia(rs.getString("U.Provincia"));
+		        		direccion.setPais(rs.getString("U.Pais"));
+		        		direccion.setCodigoPostal(rs.getString("U.CodigoPostal"));
+		        		aListar.setDireccion(direccion);
+		        		aListar.setEmail(rs.getString("P.Email"));
+		        		aListar.setTelefono(rs.getString("P.Telefono"));
+		        		especialidad.setNombreEspecialidad(rs.getString("E.Nombre"));
+		        		aListar.setEspecialidad(especialidad);
+		        		horario.setDia(rs.getString("H.Dia"));
+		        		if (rs.getString("H.Inicio")!= null) {
+			        		horario.setInicioJornada(LocalTime.parse(rs.getString("H.Inicio")));
+			        		horario.setFinalJornada(LocalTime.parse(rs.getString("H.Final")));
+		        		} else {
+			        		horario.setInicioJornada(LocalTime.parse("00:00"));
+			        		horario.setFinalJornada(LocalTime.parse("00:00"));
+		        		}
 
-	        	//Verifica si el medico esta en el array de listados
-	        	if (esMedicoRepetido(lista, rs.getInt("M.ID"))) {
-	        		
-	        		//Si el medico ya esta en el array, va a expandir la lista de horarios de este
-	        		
-	        		Medico aAgregar = new Medico();
-	        		Horario horarioNuevo = new Horario();
-	        		aAgregar = retornarMedicoEnArray(lista, rs.getInt("M.ID"));
-	        		ArrayList<Horario>listaExpandida = aAgregar.getHorario();
-	        		horarioNuevo.setDia(rs.getString("H.Dia"));
-	        		horarioNuevo.setInicioJornada(LocalTime.parse(rs.getString("H.Inicio")));
-	        		horarioNuevo.setFinalJornada(LocalTime.parse(rs.getString("H.Final")));
-				    listaExpandida.add(horarioNuevo);
-				    aAgregar.setHorario(listaExpandida);
-				    lista.set(lista.size() - 1, aAgregar);
-	        		
-	        	} else {
-	        		//Si el medico no esta en el array, se lo agrega
-	        		
-	        		Medico aListar = new Medico();
-	        		Direccion direccion = new Direccion();
-	        		Especialidad especialidad = new Especialidad();
-	        		ArrayList<Horario> horarioLista = new ArrayList<>();
-	        		Horario horario = new Horario();
-	        		aListar.setId(rs.getInt("M.ID"));
-	        		aListar.setDni(rs.getString("P.Dni"));
-	        		aListar.setNombre(rs.getString("P.Nombre"));
-	        		aListar.setApellido(rs.getString("P.Apellido"));
-	        		aListar.setSexo(rs.getString("P.Sexo"));
-	        		aListar.setNacionalidad(rs.getString("P.Nacionalidad"));
-	        		aListar.setFechaNacimiento(rs.getDate("P.FechaNacimiento").toLocalDate());
-	        		direccion.setCalle(rs.getString("U.Calle"));
-	        		direccion.setNumero(rs.getString("U.Numero"));
-	        		direccion.setLocalidad(rs.getString("U.Localidad"));
-	        		direccion.setProvincia(rs.getString("U.Provincia"));
-	        		direccion.setPais(rs.getString("U.Pais"));
-	        		direccion.setCodigoPostal(rs.getString("U.CodigoPostal"));
-	        		aListar.setDireccion(direccion);
-	        		aListar.setEmail(rs.getString("P.Email"));
-	        		aListar.setTelefono(rs.getString("P.Telefono"));
-	        		especialidad.setNombreEspecialidad(rs.getString("E.Nombre"));
-	        		aListar.setEspecialidad(especialidad);
-	        		horario.setDia(rs.getString("H.Dia"));
-	        		if (rs.getString("H.Inicio")!= null) {
-		        		horario.setInicioJornada(LocalTime.parse(rs.getString("H.Inicio")));
-		        		horario.setFinalJornada(LocalTime.parse(rs.getString("H.Final")));
-	        		} else {
-		        		horario.setInicioJornada(LocalTime.parse("00:00"));
-		        		horario.setFinalJornada(LocalTime.parse("00:00"));
-	        		}
+		        		horarioLista.add(horario);
+		        		aListar.setHorario(horarioLista);
+		        		
 
-	        		horarioLista.add(horario);
-	        		aListar.setHorario(horarioLista);
-	        		
-
-	        		lista.add(aListar);
+		        		lista.add(aListar);
+		        	}
 	        	}
+
+
 
         	}
 	        
