@@ -137,6 +137,7 @@ public class servletMedico extends HttpServlet {
 				m.setSexo(request.getParameter("sexoMedico"));
 				m.setTelefono(request.getParameter("telefonoMedico"));
 				m.setUsuario(request.getParameter("usuarioMedico"));
+
 				
 				//FUNCION PARA AGREGAR MEDICO
 				if (boton.contains("Agregar Medico")) 
@@ -153,6 +154,7 @@ public class servletMedico extends HttpServlet {
 				 //FUNCION PARA MODIFICAR MEDICO
 				else if(boton.contains("Modificar Medico")) 
 				{
+					m.setId(Integer.parseInt(request.getParameter("idMedico")));
 					mDao.actualizarMedico(m);
 				}
 				

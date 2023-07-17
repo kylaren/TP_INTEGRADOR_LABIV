@@ -66,24 +66,24 @@ public class MedicoDaoImpl implements MedicoDAO{
 				    
 				    // Establece los valores de los parámetros en el procedimiento almacenado
 				    statement.setInt(1, medico.getId());
-			        statement.setString(1, medico.getDni());
-			        statement.setString(2, medico.getNombre());
-			        statement.setString(3, medico.getApellido());
-			        statement.setString(4, medico.getSexo());
-			        statement.setString(5, medico.getNacionalidad());
-			        statement.setDate(6, java.sql.Date.valueOf(medico.getFechaNacimiento()));
-			        statement.setString(7, medico.getEmail());
-			        statement.setString(8, medico.getTelefono());
+			        statement.setString(2, medico.getDni());
+			        statement.setString(3, medico.getNombre());
+			        statement.setString(4, medico.getApellido());
+			        statement.setString(5, medico.getSexo());
+			        statement.setString(6, medico.getNacionalidad());
+			        statement.setDate(7, java.sql.Date.valueOf(medico.getFechaNacimiento()));
+			        statement.setString(8, medico.getEmail());
+			        statement.setString(9, medico.getTelefono());
 			        
-			        statement.setString(9, medico.getDireccion().getCalle());
-			        statement.setString(10, medico.getDireccion().getNumero());
-			        statement.setString(11, medico.getDireccion().getLocalidad());
-			        statement.setString(12, medico.getDireccion().getProvincia());
-			        statement.setString(13, medico.getDireccion().getPais());
-			        statement.setString(14, medico.getDireccion().getCodigoPostal());
-			        statement.setInt(15, medico.getEspecialidad().getIdEspecialidad());
-			        statement.setString(16, medico.getUsuario() );
-			        statement.setString(17, medico.getContrasena());
+			        statement.setString(10, medico.getDireccion().getCalle());
+			        statement.setString(11, medico.getDireccion().getNumero());
+			        statement.setString(12, medico.getDireccion().getLocalidad());
+			        statement.setString(13, medico.getDireccion().getProvincia());
+			        statement.setString(14, medico.getDireccion().getPais());
+			        statement.setString(15, medico.getDireccion().getCodigoPostal());
+			        statement.setInt(16, medico.getEspecialidad().getIdEspecialidad());
+			        statement.setString(17, medico.getUsuario() );
+			        statement.setString(18, medico.getContrasena());
 				    
 				    // Ejecuta el procedimiento almacenado
 				    if(statement.executeUpdate() > 0)

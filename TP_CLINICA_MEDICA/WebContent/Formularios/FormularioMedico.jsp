@@ -35,6 +35,19 @@
 	<form method="post" action="servletMedico">
 	<div class="form-group">
 		
+		
+		<% if(aModificar != null){
+		%>
+			
+  		<div class="form-group">
+		    <label for="idMedico">Id del Usuario</label>
+		    <input type="text" class="form-control" name="idMedico" value="<%= aModificar.getId()%>" readonly >
+	  	</div>
+			
+		<% } %>
+			
+		
+		
 	  	<!-- USUARIO Medico -->
 	  
   		<div class="form-group">
