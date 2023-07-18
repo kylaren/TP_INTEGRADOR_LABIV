@@ -33,7 +33,7 @@
 			$('#tablaMedicos').DataTable();
 		});
 	</script>
-		
+	<!-- Script para paginar tablas -->
 	
 	</head>
 	<body>

@@ -231,7 +231,7 @@ public class MedicoDaoImpl implements MedicoDAO{
 
 	    	String query = "Select M.ID, P.Dni, P.Nombre, P.Apellido, P.Sexo, P.Nacionalidad, P.FechaNacimiento, "+
 	    			"U.Calle, U.Numero, U.Localidad, U.Provincia, U.Pais, U.CodigoPostal, "+
-                    "P.Email, P.Telefono, E.Nombre, H.Dia, H.Inicio, H.Final, M.Estado FROM Medicos M "+
+                    "P.Email, P.Telefono, E.Nombre, H.Dia, H.Inicio, H.Final, M.Estado, M.Usuario FROM Medicos M "+
 	    			"INNER JOIN Personas P ON M.IdPersona = P.Id "+
 	    			"INNER JOIN Ubicaciones U ON P.IdUbicacion = U.Id "+
 					"INNER JOIN Especialidades E ON M.IdEspecialidad = E.Id "+
@@ -298,6 +298,7 @@ public class MedicoDaoImpl implements MedicoDAO{
 
 		        		horarioLista.add(horario);
 		        		aListar.setHorario(horarioLista);
+		        		aListar.setUsuario(rs.getString("M.Usuario"));
 		        		
 
 		        		lista.add(aListar);

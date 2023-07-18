@@ -11,24 +11,65 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
-</head>
-<body>
 
+	
 <% 
+	//Formato para fechas
 	DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+	//Arraylist de especialidades
 	ArrayList<Especialidad> listaEspecialidades = null;
 	if(request.getAttribute("especialidades")!=null)
 	{
 		listaEspecialidades = (ArrayList<Especialidad>)request.getAttribute("especialidades");
 	}
 	
+	//Carga de medico
 	Medico aModificar = null;
 	if(request.getAttribute("medico")!=null)
 	{
 		aModificar = (Medico)request.getAttribute("medico");
 	}
 	
+	//Bandera que marca si se modifica medico o si solo se esta ingresando/corrigiendo validaciones
+	boolean banderaModificar = false;
+	if(request.getAttribute("banderaModificar")!=null){
+		banderaModificar = (boolean)request.getAttribute("banderaModificar");
+	}
+	
+	///Validacion de DNI y otros
+	boolean emailValido = true;
+	boolean usuarioValido = true;
+	boolean dniValido = true;
+	String mensajeError = null;
+	if (request.getAttribute("mensajeError")!=null){
+		mensajeError = (String)request.getAttribute("mensajeError");
+		dniValido = (boolean)request.getAttribute("dniValido");
+		usuarioValido = (boolean)request.getAttribute("usuarioValido");
+		emailValido = (boolean)request.getAttribute("emailValido");
+	}
+
+	
+	
 %>	
+
+
+	<!-- Script para validacion de DNI repetido -->
+	<script>
+    $(document).ready(function() {
+        var message = "<%= mensajeError %>";
+
+        if (message && message.trim() !== "" && message.trim() !== "null") {
+            alert(message); // Display the error message in a popup
+        }
+    });
+	</script>
+	
+
+
+</head>
+<body>
+
 
 
 	<h1>Agregar Medico</h1>
@@ -36,7 +77,7 @@
 	<div class="form-group">
 		
 		
-		<% if(aModificar != null){
+		<% if(banderaModificar){
 		%>
 			
   		<div class="form-group">
@@ -52,7 +93,7 @@
 	  
   		<div class="form-group">
 		    <label for="nombreMedico">Nombre de Usuario</label>
-		    <input type="text" class="form-control" name="usuarioMedico" value="<%= (aModificar != null) ? aModificar.getUsuario() : "" %>" >
+		    <input type="text" class="form-control <%= (!usuarioValido) ? "is-invalid" : "" %>" name="usuarioMedico" value="<%= (aModificar != null) ? aModificar.getUsuario() : "" %>" >
 	  	</div>
   
 	   	<!-- USUARIO Medico -->
@@ -79,7 +120,7 @@
 	  	
 	  		<div class="form-group">
 			    <label for="dniMedico">DNI</label>
-			    <input type="text" class="form-control" name="dniMedico" value="<%= (aModificar != null) ? aModificar.getDni() : "" %>">
+			    <input type="text" class="form-control <%= (!dniValido) ? "is-invalid" : "" %>" name="dniMedico" value="<%= (aModificar != null) ? aModificar.getDni() : "" %>">
 			  </div>
 				  		
 	  	<!-- NOMBRE Medico -->
@@ -192,7 +233,7 @@
 	  
 	  		<div class="form-group">
 			    <label for="mailMedico">Correo Electronico</label>
-			    <input type="email" class="form-control" name="emailMedico" value="<%= (aModificar != null) ? aModificar.getEmail(): "" %>" >
+			    <input type="email" class="form-control <%= (!emailValido) ? "is-invalid" : "" %>" name="emailMedico" value="<%= (aModificar != null) ? aModificar.getEmail(): "" %>" >
 		  	</div>	
 	  
 	  
@@ -209,7 +250,7 @@
 		<!-- a implementar mas tarde -->
 	
 		
-		<% if(aModificar == null){
+		<% if(!banderaModificar){
 			%>
 			
 				
@@ -272,7 +313,7 @@
 		
 		 
 	  <br>
-	   <input type="submit" class="btn btn-dark" name="btnAgregar" value="<% if(aModificar != null){ %>Modificar Medico<% }else{ %>Agregar Medico<% } %>">
+	   <input type="submit" class="btn btn-dark" name="btnAgregar" value="<% if(banderaModificar){ %>Modificar Medico<% }else{ %>Agregar Medico<% } %>">
 	  
 	  </div>
 

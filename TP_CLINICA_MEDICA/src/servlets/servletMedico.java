@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -83,6 +84,9 @@ public class servletMedico extends HttpServlet {
 					Medico aBuscar = mDao.buscarMedico(Integer.parseInt(request.getParameter("id")));
 					request.setAttribute("medico", aBuscar);
 					
+					boolean modificar = true;
+					request.setAttribute("banderaModificar", modificar);
+					
 					String aVisitar = "formularioMedico";
 					request.setAttribute("sitio", aVisitar);
 					
@@ -137,12 +141,7 @@ public class servletMedico extends HttpServlet {
 				ArrayList<Horario> mlh = new ArrayList<>();
 				Horario mh = new Horario();
 				
-				//VERIFICAR QUE NO HAYA USUARIOS CON EL DNI INGRESADO
-				ArrayList<Medico> verificarDNI = mDao.listarMedicos();
-				String aVerificar = request.getParameter("dniMedico");
-				
-				
-				
+		
 				
 				String FechaNacimiento = request.getParameter("fechaNacimientoMedico");
 				
@@ -175,7 +174,6 @@ public class servletMedico extends HttpServlet {
 				m.setSexo(request.getParameter("sexoMedico"));
 				m.setTelefono(request.getParameter("telefonoMedico"));
 				m.setUsuario(request.getParameter("usuarioMedico"));
-
 				
 				//FUNCION PARA AGREGAR MEDICO
 				if (boton.contains("Agregar Medico")) 
@@ -186,6 +184,55 @@ public class servletMedico extends HttpServlet {
 					mh.setFinalJornada(LocalTime.parse(request.getParameter("finalJornadaMedico")));
 					mlh.add(mh);
 					m.setHorario(mlh);
+					
+					//VERIFICAR DNI UNICO
+					ArrayList<Medico> verificarDNI = mDao.listarMedicos();
+					boolean dniValido = true;
+					boolean usuarioValido = true;
+					boolean emailValido = true;
+					for (Medico medico : verificarDNI) {
+					    if ((medico.getDni().equals(m.getDni())) || (medico.getEmail().equals(m.getEmail())) || (medico.getUsuario().equals(m.getUsuario())) ) {
+					        
+					    	//MANDAR MENSAJE ACLARANDO QUE SE ENCONTRO UN DNI IDENTICO
+					    	String mensaje = "Se han encontrado atributos identicos en la base de datos, por favor, ingrese otros distintos. \\nAtributos identicos: ";
+					    	if(medico.getDni().equals(m.getDni())) {
+					    		mensaje += " DNI ";
+					    		dniValido = false;
+					    	}
+					    	if(medico.getEmail().equals(m.getEmail())) {
+					    		mensaje += " Correo Electronico ";
+					    		emailValido = false;
+					    	}
+					    	if(medico.getUsuario().equals(m.getUsuario())) {
+					    		mensaje += " Nombre de usuario ";
+					    		usuarioValido = false;
+					    	}
+
+					        //VALIDACIONES A USAR EN FORMULARIO
+					        request.setAttribute("dniValido", dniValido);
+					        request.setAttribute("emailValido", emailValido);
+					        request.setAttribute("usuarioValido", usuarioValido);
+					        request.setAttribute("mensajeError", mensaje);
+					        
+					        //REDIRECCION A FORMULARIO					  
+					        ArrayList<Especialidad> listaEspecialidades = new ArrayList<>();
+							EspecialidadDaoImpl esp = new EspecialidadDaoImpl();
+							listaEspecialidades = esp.listarEspecialidades();
+							request.setAttribute("especialidades", listaEspecialidades);
+					        
+							request.setAttribute("medico", m);
+							
+							String aVisitar = "formularioMedico";
+							request.setAttribute("sitio", aVisitar);
+							
+							RequestDispatcher rdi = request.getRequestDispatcher("/Layout/MasterPage.jsp");   
+							rdi.forward(request, response);
+							
+							return;
+					        
+					    }
+					}
+					
 					//FUNCION MAGICA
 					mDao.insertarMedico(m);
 				} 
