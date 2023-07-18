@@ -1,6 +1,8 @@
+<%@ page import="dominio.Direccion"%>
 <%@ page import="dominio.Paciente"%>
 <%@ page import="daoImpl.PacienteDaoImpl"%>
 <%@ page import="java.util.ArrayList"%>
+<%@ page import="java.time.LocalDate"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -17,6 +19,7 @@
 	
 	</style>
 
+	
 
 </head>
 <body>
@@ -88,7 +91,7 @@
 			</table>
 		</div>
 		<br>
-		<button type="button" class="btn btn-dark">Agregar Paciente</button>
+		<a href="servletPaciente?master=formularioPaciente" class="btn btn-dark">Agregar Paciente</a>
 			
 
 

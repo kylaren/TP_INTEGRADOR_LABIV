@@ -1,7 +1,8 @@
 package dominio;
 
 
-import java.sql.Date;
+
+import java.time.LocalDate;
 
 public abstract class Persona {
 	
@@ -11,7 +12,7 @@ public abstract class Persona {
 	private String apellido;
 	private String sexo;
 	private String nacionalidad;
-	private Date fechaNacimiento;
+	private LocalDate fechaNacimiento;
 	private String email;
 	private String telefono;
 	
@@ -23,7 +24,7 @@ public abstract class Persona {
 		
 	}
 	
-	public Persona(Direccion direccion,String dni, String nombre, String apellido, String sexo, String nacionalidad,Date fechaNacimiento,
+	public Persona(Direccion direccion,String dni, String nombre, String apellido, String sexo, String nacionalidad,LocalDate fechaNacimiento,
 			String email, String telefono) {
 		
 		this.direccion = direccion;
@@ -88,11 +89,11 @@ public abstract class Persona {
 		this.nacionalidad = nacionalidad;
 	}
 
-	public Date getFechaNacimiento() {
+	public LocalDate getFechaNacimiento() {
 		return fechaNacimiento;
 	}
 
-	public void setFechaNacimiento(Date fechaNacimiento) {
+	public void setFechaNacimiento(LocalDate fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 

@@ -171,6 +171,14 @@
 			
 			<%
 			break;
+		case "abmlPacientes":
+			
+			%>
+			
+			<%@ include file="../ABMLs/ABMLPacientes.jsp" %>
+			
+			<%
+			break;
 		
 		case "formularioMedico":
 			

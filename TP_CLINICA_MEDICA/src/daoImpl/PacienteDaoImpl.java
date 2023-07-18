@@ -2,11 +2,13 @@ package daoImpl;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.sql.Statement;
 
 import java.util.List;
 
@@ -31,7 +33,7 @@ public class PacienteDaoImpl implements PacienteDAO {
 	    try 
 	    {
 	        // Crea la sentencia SQL para insertar el paciente
-	        String spIngresarPaciente = "CALL SP_IngresarPaciente(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	        String spIngresarPaciente = "CALL SP_IngresarPaciente(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	        CallableStatement statement = conexion.prepareCall(spIngresarPaciente);
 
 	        // Establece los valores de los parámetros en la sentencia SQL
@@ -40,7 +42,7 @@ public class PacienteDaoImpl implements PacienteDAO {
 	        statement.setString(3, paciente.getApellido());
 	        statement.setString(4, paciente.getSexo());
 	        statement.setString(5, paciente.getNacionalidad());
-	        statement.setDate(6, new java.sql.Date(paciente.getFechaNacimiento().getTime()));
+	        statement.setDate(6, java.sql.Date.valueOf(paciente.getFechaNacimiento()));
 	        statement.setString(7, paciente.getEmail());
 	        statement.setString(8, paciente.getTelefono());
 	        
@@ -87,7 +89,7 @@ public class PacienteDaoImpl implements PacienteDAO {
 		    statement.setString(4, paciente.getApellido());
 		    statement.setString(5, paciente.getSexo());
 		    statement.setString(6, paciente.getNacionalidad());
-		    statement.setDate(7, new java.sql.Date(paciente.getFechaNacimiento().getTime()));
+		    statement.setDate(7, java.sql.Date.valueOf(paciente.getFechaNacimiento()));
 		    statement.setString(8, paciente.getEmail());
 		    statement.setString(9, paciente.getTelefono());
 		    statement.setString(10, paciente.getDireccion().getCalle());
@@ -153,7 +155,7 @@ public class PacienteDaoImpl implements PacienteDAO {
 	
 	//LISTAR REGISTROS PACIENTES
 	@Override
-	public List<Paciente> readAll() {
+	public ArrayList<Paciente> readAll() {
 		PreparedStatement statement;
 		ResultSet resultSet; //Guarda el resultado de la query
 		ArrayList<Paciente> pacientes = new ArrayList<Paciente>();
@@ -192,7 +194,7 @@ public class PacienteDaoImpl implements PacienteDAO {
 		  String apellido = resultSet.getString("apellido");
 		  String sexo = resultSet.getString("sexo");
 		  String nacionalidad = resultSet.getString("nacionalidad");
-		  Date fechaNacimiento = resultSet.getDate("fecha_nacimiento");
+		  LocalDate fechaNacimiento = (resultSet.getDate("fecha_nacimiento")).toLocalDate();
 		  String email = resultSet.getString("email");
 		  String telefono = resultSet.getString("telefono");
 		  int id = resultSet.getInt("id");

@@ -1,6 +1,7 @@
 package dominio;
 
-import java.sql.Date;
+
+import java.time.LocalDate;
 
 public class Paciente extends Persona{
 	
@@ -11,7 +12,7 @@ public class Paciente extends Persona{
 	//constructor
 	
 	
-	public Paciente(Direccion direccion,String dni, String nombre, String apellido, String sexo, String nacionalidad, Date fechaNacimiento,
+	public Paciente(Direccion direccion,String dni, String nombre, String apellido, String sexo, String nacionalidad, LocalDate fechaNacimiento,
 			String email, String telefono, int id, int estado) 
 	{	
 		super(direccion, dni, nombre, apellido, sexo, nacionalidad, fechaNacimiento, email, telefono);
