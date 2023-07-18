@@ -37,14 +37,15 @@ public class EspecialidadDaoImpl implements EspecialidadDAO {
 	        ResultSet rs = st.executeQuery(query);
 	        
 	        while(rs.next()) {
-	        	boolean estado = rs.getBoolean("Estado");
+	        	boolean estado = rs.getBoolean("Estado"); 
 	        	if(estado) {
 	        		Especialidad aListar = new Especialidad();
 	        		aListar.setIdEspecialidad(rs.getInt("id"));
 	        		aListar.setNombreEspecialidad(rs.getString("Nombre"));
 	        		aListar.setDescripcionEspecialidad(rs.getString("Descripcion"));	 
-	        		
-	        		lista.add(aListar);
+	        		if(aListar.getIdEspecialidad() != 4) {	        			
+	        			lista.add(aListar);
+	        		}
 	        	}
 	        }
 	        conexion.close();

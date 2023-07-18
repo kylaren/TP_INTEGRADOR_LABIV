@@ -137,6 +137,13 @@ public class servletMedico extends HttpServlet {
 				ArrayList<Horario> mlh = new ArrayList<>();
 				Horario mh = new Horario();
 				
+				//VERIFICAR QUE NO HAYA USUARIOS CON EL DNI INGRESADO
+				ArrayList<Medico> verificarDNI = mDao.listarMedicos();
+				String aVerificar = request.getParameter("dniMedico");
+				
+				
+				
+				
 				String FechaNacimiento = request.getParameter("fechaNacimientoMedico");
 				
 				LocalDate FechaNacUtil;

@@ -53,10 +53,12 @@ public class PacienteDaoImpl implements PacienteDAO {
 	        statement.setString(13, paciente.getDireccion().getPais());
 	        statement.setString(14, paciente.getDireccion().getCodigoPostal());
 	        
+	        System.out.println("Query: " + statement.toString());
+	        
 	     // Ejecuta la sentencia SQL
 	        if(statement.executeUpdate() > 0)
 	        {
-				
+	        	conexion.commit();
 				isInsertExitoso = true;
 			}
 	    } 

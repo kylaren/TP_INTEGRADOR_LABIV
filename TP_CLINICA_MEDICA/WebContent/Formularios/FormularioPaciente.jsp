@@ -130,8 +130,8 @@
 		  	</div>	
 	  
 	  		
-	  			<br>
-	  			<input type="submit" class="btn btn-dark" name="btnAgregarPaciente" value="Agregar Paciente" >
+  			<br>
+  			<input type="submit" class="btn btn-dark" name="btnAgregarPaciente" value="Agregar Paciente" >
 	  
 	  	</div>
 
