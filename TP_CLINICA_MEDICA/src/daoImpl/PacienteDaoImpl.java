@@ -15,6 +15,7 @@ import java.util.List;
 import dao.PacienteDAO;
 import dominio.Direccion;
 import dominio.Estado;
+import dominio.Medico;
 import dominio.Paciente;
 
 public class PacienteDaoImpl implements PacienteDAO {
@@ -53,7 +54,7 @@ public class PacienteDaoImpl implements PacienteDAO {
 	        statement.setString(13, paciente.getDireccion().getPais());
 	        statement.setString(14, paciente.getDireccion().getCodigoPostal());
 	        
-	        System.out.println("Query: " + statement.toString());
+	        //System.out.println("Query: " + statement.toString());
 	        
 	     // Ejecuta la sentencia SQL
 	        if(statement.executeUpdate() > 0)
@@ -155,59 +156,83 @@ public class PacienteDaoImpl implements PacienteDAO {
 
 	
 	
+	
+	
+	
+	//Chequea si hay Paciente repetido en el array
+	private boolean esPacienteRepetido(ArrayList<Paciente> listaPacientes, int idPaciente) {
+		for(Paciente p : listaPacientes) {
+			if(p.getId() == idPaciente) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	//LISTAR REGISTROS PACIENTES
 	@Override
 	public ArrayList<Paciente> readAll() {
-		PreparedStatement statement;
-		ResultSet resultSet; //Guarda el resultado de la query
-		ArrayList<Paciente> pacientes = new ArrayList<Paciente>();
-		Conexion conexion = Conexion.getConexion();
+		
+		
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		ArrayList<Paciente> lista = new ArrayList<>();
 		try 
-		{
-			statement = conexion.getSQLConexion().prepareStatement(readall);
-			resultSet = statement.executeQuery();
-			while(resultSet.next())
-			{
-				pacientes.add(getPaciente(resultSet));
-			}
-			resultSet.close();
-			statement.close();
-			conexion.cerrarConexion();
-		} 
-		catch (SQLException e) 
+	    {
+
+	        // Crea la sentencia SQL para insertar el paciente
+
+	    	String query = "SELECT PC.ID, P.Dni, P.Nombre, P.Apellido, P.Sexo, P.Nacionalidad, P.FechaNacimiento, P.Email, P.Telefono," +
+	    		      "U.Calle, U.Numero, U.Localidad, U.Provincia, U.Pais, U.CodigoPostal, P.Estado" +
+	    		      "FROM Pacientes AS PC" +
+	    		      "JOIN Personas AS P ON PC.IdPersona = P.IdPersona" +
+	    		      "JOIN Ubicaciones AS U ON P.IdUbicacion = U.IdUbicacion";
+	    	Statement st = conexion.createStatement();
+		
+	    	ResultSet rs = st.executeQuery(query);
+		
+	    	while(rs.next()) {
+	    		// verifica estado
+	    		if(rs.getBoolean("P.Estado")) {
+		    			// verifica si el paciente esta en el array de listado
+		    			//if(esPacienteRepetido(lista, rs.getInt("P.ID")) == false) {
+		    			
+		    				Paciente aListar = new Paciente();
+		    				Direccion direccion = new Direccion();
+		    				
+		    				aListar.setId(rs.getInt("PC.Id"));
+		    				aListar.setDni(rs.getString("P.Dni"));
+		    				aListar.setNombre(rs.getString("P.Nombre"));
+		    				aListar.setApellido(rs.getString("P.Apellido"));
+		    				aListar.setSexo(rs.getString("P.Sexo"));
+		    				aListar.setNacionalidad(rs.getString("P.Nacionalidad"));
+		    				aListar.setFechaNacimiento(rs.getDate("P.FechaNacimiento").toLocalDate());
+		    				aListar.setEmail(rs.getString("P.Email"));
+		    				aListar.setTelefono(rs.getString("P.Telefono"));
+		    				direccion.setCalle(rs.getString("U.Calle"));
+			        		direccion.setNumero(rs.getString("U.Numero"));
+			        		direccion.setLocalidad(rs.getString("U.Localidad"));
+			        		direccion.setProvincia(rs.getString("U.Provincia"));
+			        		direccion.setPais(rs.getString("U.Pais"));
+			        		direccion.setCodigoPostal(rs.getString("U.CodigoPostal"));
+			        		aListar.setDireccion(direccion);
+			        		
+			        		lista.add(aListar);
+		    			//}
+	    		}
+	    	}
+	    	conexion.close();	
+	    }
+    	catch (SQLException e) 
 		{
 			e.printStackTrace();
+			try {
+				conexion.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 		}
-		return pacientes;
+	    return lista;
 	}
 	
-	
-	private Paciente getPaciente(ResultSet resultSet) throws SQLException
-	{
-		  
-		  String calle = resultSet.getString("calle");
-		  String numero = resultSet.getString("numero");
-		  String localidad = resultSet.getString("localidad");
-		  String provincia = resultSet.getString("provincia");
-		  String pais = resultSet.getString("pais");
-		  String codigoPostal = resultSet.getString("codigo_postal");
-		  String dni = resultSet.getString("dni");
-		  String nombre = resultSet.getString("nombre");
-		  String apellido = resultSet.getString("apellido");
-		  String sexo = resultSet.getString("sexo");
-		  String nacionalidad = resultSet.getString("nacionalidad");
-		  LocalDate fechaNacimiento = (resultSet.getDate("fecha_nacimiento")).toLocalDate();
-		  String email = resultSet.getString("email");
-		  String telefono = resultSet.getString("telefono");
-		  int id = resultSet.getInt("id");
-		  int estado = resultSet.getInt("estado_id");
-		  
-		
-		// Crea objeto de tipo Direccion
-		  Direccion direccion = new Direccion(calle, numero, localidad, provincia, pais, codigoPostal);
-
-		// Crea objeto de tipo Paciente y lo devuelve
-		  return new Paciente(direccion, dni, nombre, apellido, sexo, nacionalidad, fechaNacimiento, email, telefono, id, estado);
-	}
 
 }

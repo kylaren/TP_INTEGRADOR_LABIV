@@ -36,23 +36,20 @@
 
 </head>
 <body>
-
-<a href="MasterPage.jsp"> Inicio</a> <a href="servletMaster?opc=1"> Agregar paciente </a> <a href="servletMaster?param=1"> Listar pacientes</a>
-<br><br>
-<b>"pacientes de la base de datos"</b>
-<br><br>
-<% 
-	ArrayList<Paciente> listaPacientes = null;
-	if(request.getAttribute("listaP")!=null)
-	{
-		listaPacientes = (ArrayList<Paciente>) request.getAttribute("listaP");
-	}
-	
-%>	
+		<h1> ABML de Pacientes </h1>
+		<br>
+		<% 
+			ArrayList<Paciente> listaPacientes = null;
+			if(request.getAttribute("listaP")!=null)
+			{
+				listaPacientes = (ArrayList<Paciente>) request.getAttribute("listaP");
+			}
+			
+		%>	
+		<br>
 
 
-<h1> ABML de Pacientes </h1>
-<br>
+<
 		<div id=tablaWrapper>
 			<table border="1" id="tablaPacientes" class="table table-bordered">
 				<thead>
@@ -80,9 +77,42 @@
 					<tr>  
 					<%--   <form name="formulario" action="servletMaster?idPaciente=<%=paciente.getId()%>" method="get"> --%> 
 						<td>
-							 <a href="#">Modificar</a>
- 							 <a href="#">Eliminar</a> 
-						</td>
+									 <a href="servletMedico?master=formularioMedico&id=<%=paciente.getId() %>"  >
+									 <button type="button" class="btn btn-link">Modificar</button>
+									 </a>
+									 <button type="button" class="btn btn-link" data-toggle="modal" data-target="#modalEliminar<%=paciente.getId()%>">
+									  Eliminar
+									</button>
+									
+
+									
+									<!-- Modal -->
+
+																		
+									<div class="modal fade" id="modalEliminar<%=paciente.getId()%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+									  <div class="modal-dialog">
+									    <div class="modal-content">
+									      <div class="modal-header">
+									        <h5 class="modal-title" id="exampleModalLabel">Eliminacion del paciente: <%=paciente.getNombre() %>&nbsp;<%=paciente.getApellido() %> </h5>
+									        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									          <span aria-hidden="true">&times;</span>
+									        </button>
+									      </div>
+									      <div class="modal-body">
+									      		¿Esta seguro de que desea eliminar el siguiente paciente: <%=paciente.getNombre() %>&nbsp;<%=paciente.getApellido() %> ?
+									      </div>
+									      <div class="modal-footer">
+									        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+									        <form method="post" action="servletMedico">
+									        	<button type="submit" class="btn btn-danger" name="btnEliminar" value="<%=paciente.getId()%>">Eliminar</button>
+									        </form>
+									      </div>
+
+									    </div>
+									  </div>
+									</div>
+		 						
+								</td>
 						
 						<td><%=paciente.getId() %>    <input type="hidden" name="idPaciente" value="<%=paciente.getId()%>"> </td> 
 						<td><%=paciente.getDni() %></td>
@@ -91,7 +121,7 @@
 						<td><%=paciente.getSexo() %></td>
 						<td><%=paciente.getNacionalidad() %></td>
 						<td><%=paciente.getFechaNacimiento() %></td>
-						<td><%=paciente.getDireccion() %></td>
+						<td><%=paciente.getDireccion().getCalle() %>&nbsp; <%=paciente.getDireccion().getNumero() %></td>
 						<td><%=paciente.getNacionalidad() %></td>
 						<td><%=paciente.getEmail() %></td>
 						<td><%=paciente.getTelefono() %></td>
