@@ -128,6 +128,12 @@ public class servletPaciente extends HttpServlet {
 				    	//FUNCION MAGICA
 				    	pdao.insert(paciente);
 				    }
+				    
+				    else if(boton.contains("Modificar Paciente"))
+				    {
+				    	paciente.setId(Integer.parseInt(request.getParameter("idPaciente")));
+				    	pdao.update(paciente);
+				    }
 					
 					redireccionarABML(request, response);
 				}

@@ -181,20 +181,20 @@ public class PacienteDaoImpl implements PacienteDAO {
 
 	        // Crea la sentencia SQL para insertar el paciente
 
-	    	String query = "SELECT PC.ID, P.Dni, P.Nombre, P.Apellido, P.Sexo, P.Nacionalidad, P.FechaNacimiento, P.Email, P.Telefono," +
-	    		      "U.Calle, U.Numero, U.Localidad, U.Provincia, U.Pais, U.CodigoPostal, P.Estado" +
-	    		      "FROM Pacientes AS PC" +
-	    		      "JOIN Personas AS P ON PC.IdPersona = P.IdPersona" +
-	    		      "JOIN Ubicaciones AS U ON P.IdUbicacion = U.IdUbicacion";
+	    	String query = "SELECT PC.ID, P.Dni, P.Nombre, P.Apellido, P.Sexo, P.Nacionalidad, P.FechaNacimiento, P.Email, P.Telefono," + 
+	    			"	    		      U.Calle, U.Numero, U.Localidad, U.Provincia, U.Pais, U.CodigoPostal, PC.Estado" + 
+	    			"	    		      FROM Pacientes AS PC" + 
+	    			"	    		      JOIN Personas AS P ON PC.IdPersona = P.Id" + 
+	    			"	    		      JOIN Ubicaciones AS U ON P.IdUbicacion = U.Id";
 	    	Statement st = conexion.createStatement();
 		
 	    	ResultSet rs = st.executeQuery(query);
 		
 	    	while(rs.next()) {
 	    		// verifica estado
-	    		if(rs.getBoolean("P.Estado")) {
-		    			// verifica si el paciente esta en el array de listado
-		    			//if(esPacienteRepetido(lista, rs.getInt("P.ID")) == false) {
+	    		if(rs.getBoolean("PC.Estado")) {
+		    			//verifica si el paciente esta en el array de listado
+		    			if(esPacienteRepetido(lista, rs.getInt("PC.ID")) == false) {
 		    			
 		    				Paciente aListar = new Paciente();
 		    				Direccion direccion = new Direccion();
@@ -217,7 +217,7 @@ public class PacienteDaoImpl implements PacienteDAO {
 			        		aListar.setDireccion(direccion);
 			        		
 			        		lista.add(aListar);
-		    			//}
+		    			}
 	    		}
 	    	}
 	    	conexion.close();	

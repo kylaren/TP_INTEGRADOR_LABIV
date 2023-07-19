@@ -9,6 +9,18 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Formulario Paciente</title>
+
+
+<%
+	Paciente aModificar = null;
+	if(request.getAttribute("paciente")!=null)
+	{
+		aModificar= (Paciente)request.getAttribute("paciente");
+	}
+
+
+%>	
+
 </head>
 <body>
 
@@ -131,7 +143,7 @@
 	  
 	  		
   			<br>
-  			<input type="submit" class="btn btn-dark" name="btnAgregarPaciente" value="Agregar Paciente" >
+  			<input type="submit" class="btn btn-dark" name="btnAgregarPaciente" value="<% if(banderaModificar){ %>Modificar Paciente<% }else{ %>Agregar Paciente<% } %>" >
 	  
 	  	</div>
 

@@ -77,7 +77,7 @@
 					<tr>  
 					<%--   <form name="formulario" action="servletMaster?idPaciente=<%=paciente.getId()%>" method="get"> --%> 
 						<td>
-									 <a href="servletMedico?master=formularioMedico&id=<%=paciente.getId() %>"  >
+									 <a href="servletPaciente?master=formularioPaciente&id=<%=paciente.getId() %>"  >
 									 <button type="button" class="btn btn-link">Modificar</button>
 									 </a>
 									 <button type="button" class="btn btn-link" data-toggle="modal" data-target="#modalEliminar<%=paciente.getId()%>">
