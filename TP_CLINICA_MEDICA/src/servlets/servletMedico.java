@@ -2,6 +2,7 @@ package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.Field;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -45,8 +46,12 @@ public class servletMedico extends HttpServlet {
     
 	private MedicoDaoImpl mDao = new MedicoDaoImpl();
     
-    //FUNCIONES INTRINSECAS DEL SERVLET
-    
+	///#########################################
+    ///### FUNCIONES INTRINSECAS DEL SERVLET ###
+    ///#########################################
+	
+	// REDIRECCIONAR A ABML DESPUES DE CARGAR ALGO EN LA DB
+	
     private void redireccionarABML(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ArrayList<Medico> lista = new ArrayList<>();
 		lista = mDao.listarMedicos();
@@ -59,7 +64,71 @@ public class servletMedico extends HttpServlet {
         rdi.forward(request, response);
 		
     }
+    
+    // REDIRECCIONAR AL FORMULARIO AL COMPROBAR UN ERROR DE VALIDACION EN EL FORMULARIO
+    
+    private void redireccionarFormulario(HttpServletRequest request, HttpServletResponse response, Medico med) throws ServletException, IOException {
+    	
+        ArrayList<Especialidad> listaEspecialidades = new ArrayList<>();
+		EspecialidadDaoImpl esp = new EspecialidadDaoImpl();
+		listaEspecialidades = esp.listarEspecialidades();
+		request.setAttribute("especialidades", listaEspecialidades);
+        
+		request.setAttribute("medico", med);
+		
+		String aVisitar = "formularioMedico";
+		request.setAttribute("sitio", aVisitar);
+		
+		RequestDispatcher rdi = request.getRequestDispatcher("/Layout/MasterPage.jsp");   
+		rdi.forward(request, response);
 
+    }
+
+    
+    
+    //VALIDACION DE DATOS 
+    private void validarDatos(HttpServletRequest request, HttpServletResponse response, Medico m) throws ServletException, IOException  {
+    	//DATOS A MANDAR AL SERVLET
+		boolean dniValido = true;
+		boolean usuarioValido = true;
+		boolean emailValido = true;    	
+    	
+    	//VERIFICAR DNI UNICO
+		ArrayList<Medico> verificarDNI = mDao.listarMedicos();
+
+		for (Medico medico : verificarDNI) {
+		    if ((medico.getDni().equals(m.getDni())) || (medico.getEmail().equals(m.getEmail())) || (medico.getUsuario().equals(m.getUsuario())) ) {
+		        
+		    	//MANDAR MENSAJE ACLARANDO QUE SE ENCONTRO UN DNI IDENTICO
+		    	String mensaje = "Se han encontrado atributos identicos en la base de datos, por favor, ingrese otros distintos. \\nAtributos identicos: ";
+		    	if(medico.getDni().equals(m.getDni())) {
+		    		mensaje += " DNI ";
+		    		dniValido = false;
+		    	}
+		    	if(medico.getEmail().equals(m.getEmail())) {
+		    		mensaje += " Correo Electronico ";
+		    		emailValido = false;
+		    	}
+		    	if(medico.getUsuario().equals(m.getUsuario())) {
+		    		mensaje += " Nombre de usuario ";
+		    		usuarioValido = false;
+		    	}
+
+		        //VALIDACIONES A USAR EN FORMULARIO
+		        request.setAttribute("dniValido", dniValido);
+		        request.setAttribute("emailValido", emailValido);
+		        request.setAttribute("usuarioValido", usuarioValido);
+		        request.setAttribute("mensajeError", mensaje);
+		        
+		        //REDIRECCION A FORMULARIO					  
+		        redireccionarFormulario(request,response,m);
+				return;
+		        
+		    }
+		}
+    }
+    
+    
 
     //FUNCIONES PARA TRABAJAR CON LA PAGINA
     
@@ -185,55 +254,11 @@ public class servletMedico extends HttpServlet {
 					mlh.add(mh);
 					m.setHorario(mlh);
 					
-					//VERIFICAR DNI UNICO
-					ArrayList<Medico> verificarDNI = mDao.listarMedicos();
-					boolean dniValido = true;
-					boolean usuarioValido = true;
-					boolean emailValido = true;
-					for (Medico medico : verificarDNI) {
-					    if ((medico.getDni().equals(m.getDni())) || (medico.getEmail().equals(m.getEmail())) || (medico.getUsuario().equals(m.getUsuario())) ) {
-					        
-					    	//MANDAR MENSAJE ACLARANDO QUE SE ENCONTRO UN DNI IDENTICO
-					    	String mensaje = "Se han encontrado atributos identicos en la base de datos, por favor, ingrese otros distintos. \\nAtributos identicos: ";
-					    	if(medico.getDni().equals(m.getDni())) {
-					    		mensaje += " DNI ";
-					    		dniValido = false;
-					    	}
-					    	if(medico.getEmail().equals(m.getEmail())) {
-					    		mensaje += " Correo Electronico ";
-					    		emailValido = false;
-					    	}
-					    	if(medico.getUsuario().equals(m.getUsuario())) {
-					    		mensaje += " Nombre de usuario ";
-					    		usuarioValido = false;
-					    	}
-
-					        //VALIDACIONES A USAR EN FORMULARIO
-					        request.setAttribute("dniValido", dniValido);
-					        request.setAttribute("emailValido", emailValido);
-					        request.setAttribute("usuarioValido", usuarioValido);
-					        request.setAttribute("mensajeError", mensaje);
-					        
-					        //REDIRECCION A FORMULARIO					  
-					        ArrayList<Especialidad> listaEspecialidades = new ArrayList<>();
-							EspecialidadDaoImpl esp = new EspecialidadDaoImpl();
-							listaEspecialidades = esp.listarEspecialidades();
-							request.setAttribute("especialidades", listaEspecialidades);
-					        
-							request.setAttribute("medico", m);
-							
-							String aVisitar = "formularioMedico";
-							request.setAttribute("sitio", aVisitar);
-							
-							RequestDispatcher rdi = request.getRequestDispatcher("/Layout/MasterPage.jsp");   
-							rdi.forward(request, response);
-							
-							return;
-					        
-					    }
-					}
+					//VALIDACION DE DATOS
+					
 					
 					//FUNCION MAGICA
+					validarDatos(request, response, m);
 					mDao.insertarMedico(m);
 				} 
 				 //FUNCION PARA MODIFICAR MEDICO

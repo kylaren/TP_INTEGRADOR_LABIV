@@ -4,6 +4,8 @@
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.time.format.DateTimeFormatter"%>
 
+
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -37,7 +39,9 @@
 		banderaModificar = (boolean)request.getAttribute("banderaModificar");
 	}
 	
-	///Validacion de DNI y otros
+	
+	
+	///Validacion de DNI
 	boolean emailValido = true;
 	boolean usuarioValido = true;
 	boolean dniValido = true;
@@ -49,9 +53,10 @@
 		emailValido = (boolean)request.getAttribute("emailValido");
 	}
 
-	
-	
+
 %>	
+
+
 
 
 	<!-- Script para validacion de DNI repetido -->
@@ -92,15 +97,21 @@
 	  	<!-- USUARIO Medico -->
 	  
   		<div class="form-group">
-		    <label for="nombreMedico">Nombre de Usuario</label>
-		    <input type="text" class="form-control <%= (!usuarioValido) ? "is-invalid" : "" %>" name="usuarioMedico" value="<%= (aModificar != null) ? aModificar.getUsuario() : "" %>" >
+		    <label for="usuarioMedico">Nombre de Usuario</label>
+		    <input type="text" required class="form-control <%= (!usuarioValido) ? "is-invalid" : "" %>" name="usuarioMedico" value="<%= (aModificar != null) ? aModificar.getUsuario() : "" %>" >
+	  		<label for="usuarioMedico"><% if(!usuarioValido){ %>
+	  			Usuario registrado en el sistema 
+	  		<% } %></label>
 	  	</div>
   
-	   	<!-- USUARIO Medico -->
+	   	<!-- CONTRASENA Medico -->
 	  
   		<div class="form-group">
 		    <label for="contrasenaMedico">Contraseña</label>
-		    <input type="password" class="form-control" name="contrasenaMedico" value="<%= (aModificar != null) ? aModificar.getContrasena() : "" %>">
+		    <input type="password" required  class="form-control" name="contrasenaMedico" value="<%= (aModificar != null) ? aModificar.getContrasena() : "" %>">
+			<label for="contrasenaMedico">
+
+	  		</label>
 	  	</div>
   
   		<!-- ESPECIALIDAD Medico -->
@@ -114,28 +125,46 @@
 			      </option>
 			    <% } %>
 			</select>
+			<label for="especialidadMedico">
+
+	  		</label>
+			
 		</div>
 	  
 	  	<!-- DNI Medico -->
 	  	
 	  		<div class="form-group">
 			    <label for="dniMedico">DNI</label>
-			    <input type="text" class="form-control <%= (!dniValido) ? "is-invalid" : "" %>" name="dniMedico" value="<%= (aModificar != null) ? aModificar.getDni() : "" %>">
-			  </div>
+			    <input type="text" required class="form-control <%= (!dniValido) ? "is-invalid" : "" %>" name="dniMedico" value="<%= (aModificar != null) ? aModificar.getDni() : "" %>">
+				<label for="dniMedico">
+					<% if(!usuarioValido){ %>
+		  				DNI registrado en el sistema 
+			  	
+			  		<% } %>
+		  		</label>
+			
+			</div>
 				  		
 	  	<!-- NOMBRE Medico -->
 	  			
 			<div class="form-group">
 			    <label for="nombreMedico">Nombre</label>
-			    <input type="text" class="form-control" name="nombreMedico" value="<%= (aModificar != null) ? aModificar.getNombre() : "" %>" >
+			    <input type="text" required class="form-control" name="nombreMedico" value="<%= (aModificar != null) ? aModificar.getNombre() : "" %>" >
+			  	<label for="nombreMedico">
+
+	  			</label>
 			  </div>
+			  
 				  		
 	  	<!-- APELLIDO Medico -->
 
 			<div class="form-group">
 			    <label for="apellidoMedico">Apellido</label>
-			    <input type="text" class="form-control" name="apellidoMedico" value="<%= (aModificar != null) ? aModificar.getApellido() : "" %>" >
-			  </div>
+			    <input type="text" required class="form-control" name="apellidoMedico" value="<%= (aModificar != null) ? aModificar.getApellido() : "" %>" >
+				<label for="apellidoMedico">
+
+	  			</label>
+			</div>
 				  		
 	  	<!-- SEXO Medico -->
 	  	
@@ -148,28 +177,39 @@
 					  <option value="F" <%= (aModificar != null && aModificar.getSexo().equals("F")) ? "selected" : "" %>>Femenino</option>
 		  	     	  <option value="X" <%= (aModificar != null && aModificar.getSexo().equals("X")) ? "selected" : "" %>> No Binario </option>
 				</select> 
- 		
+ 				<label for="sexoMedico">
+	
+		  		</label>
 	  		</div>
 	  
 	  	<!-- NACIONALIDAD Medico -->
 	  	
 			<div class="form-group">
 			    <label for="nacionalidadMedico">Nacionalidad</label>
-			    <input type="text" class="form-control" name="nacionalidadMedico" value="<%= (aModificar != null) ? aModificar.getNacionalidad() : "" %>" >
-			  </div>
+			    <input type="text" required class="form-control" name="nacionalidadMedico" value="<%= (aModificar != null) ? aModificar.getNacionalidad() : "" %>" >
+				<label for="nacionalidadMedico">
+		
+	  			</label>
+			</div>
 				  		
 	  	<!-- FECHA DE NACIMIENTO Medico -->
 	  	
 			<div class="form-group">
 			    <label for="fechaNacMedico">Fecha de Nacimiento</label>
-			    <input type="text" class="form-control datepicker" name="fechaNacimientoMedico" value="<%= (aModificar != null) ? aModificar.getFechaNacimiento().format(formatoFecha) : "" %>">
+			    <input type="text" required class="form-control datepicker" name="fechaNacimientoMedico" value="<%= (aModificar != null) ? aModificar.getFechaNacimiento().format(formatoFecha) : "" %>">
+				<label for="fechaNacMedico">
+		  		
+	  			</label>
 			</div>
 				  		
 	  	<!-- CALLE Medico -->
 	  
 	  		<div class="form-group">
 			    <label for="direccionMedico">Calle de Domicilio</label>
-			    <input type="text" class="form-control" name="calleMedico" value="<%= (aModificar != null) ? aModificar.getDireccion().getCalle() : "" %>"  >
+			    <input type="text" required class="form-control" name="calleMedico" value="<%= (aModificar != null) ? aModificar.getDireccion().getCalle() : "" %>"  >
+		  		<label for="calleMedico">
+		 
+	  			</label>
 		  	</div>
 		  	
 		<!-- NUMERO DIRECCION Medico -->
@@ -177,7 +217,10 @@
 	  
 	  		<div class="form-group">
 			    <label for="direccionMedico">Numero de Domicilio</label>
-			    <input type="text" class="form-control" name="numeroMedico" value="<%= (aModificar != null) ? aModificar.getDireccion().getNumero() : "" %>"  >
+			    <input type="text" required class="form-control" name="numeroMedico" value="<%= (aModificar != null) ? aModificar.getDireccion().getNumero() : "" %>"  >
+	  			<label for="numeroMedico">
+	
+	  			</label>
 		  	</div>
 		  	
 	  	<!-- LOCALIDAD Medico -->
@@ -185,6 +228,9 @@
 	  		<div class="form-group">
 			    <label for="localidadMedico">Localidad</label>
 			    <input type="text" class="form-control" name="localidadMedico" value="<%= (aModificar != null) ? aModificar.getDireccion().getLocalidad() : "" %>"  >
+		  		<label for="localidadMedico">
+		  	
+	  			</label>
 		  	</div>	
 	  
 	  	<!-- PROVINCIA Medico -->
@@ -217,7 +263,9 @@
  					  <option value="Tierra del Fuego" <%= (aModificar != null && aModificar.getDireccion().getProvincia().equals("Tierra del Fuego")) ? "selected" : "" %>> Tierra del Fuego </option>
  					  <option value="Tucuman" <%= (aModificar != null && aModificar.getDireccion().getProvincia().equals("Tucuman")) ? "selected" : "" %>> Tucumán </option>
 				</select> 
- 		
+ 				<label for="provinciaMedico">
+		  	
+		  		</label>
 	  		</div>
 
 
@@ -226,14 +274,20 @@
 	  	
 	  		<div class="form-group">
 			    <label for="paisMedico">Codigo Postal</label>
-			    <input type="text" class="form-control" name="codigoPostalMedico" value="<%= (aModificar != null) ? aModificar.getDireccion().getCodigoPostal() : "" %>" >
+			    <input type="text" required class="form-control" name="codigoPostalMedico" value="<%= (aModificar != null) ? aModificar.getDireccion().getCodigoPostal() : "" %>" >
+	  			<label for="codigoPostalMedico">
+		  
+		  		</label>
 		  	</div>	
 	  	  
 	  	<!-- CORREO ELECTRONICO Medico -->
 	  
 	  		<div class="form-group">
 			    <label for="mailMedico">Correo Electronico</label>
-			    <input type="email" class="form-control <%= (!emailValido) ? "is-invalid" : "" %>" name="emailMedico" value="<%= (aModificar != null) ? aModificar.getEmail(): "" %>" >
+			    <input type="email" required class="form-control <%= (!emailValido) ? "is-invalid" : "" %>" name="emailMedico" value="<%= (aModificar != null) ? aModificar.getEmail(): "" %>" >
+		  		<label for="mailMedico">
+		  	
+		  		</label>
 		  	</div>	
 	  
 	  
@@ -242,7 +296,10 @@
 	  
 	  		<div class="form-group">
 			    <label for="telMedico">Telefono</label>
-			    <input type="number" class="form-control" name="telefonoMedico" value="<%= (aModificar != null) ? aModificar.getTelefono(): "" %>" >
+			    <input type="number" required class="form-control" name="telefonoMedico" value="<%= (aModificar != null) ? aModificar.getTelefono(): "" %>" >
+		  		<label for="telefonoMedico">
+		  		
+		  		</label>
 		  	</div>	
 		  	
 
