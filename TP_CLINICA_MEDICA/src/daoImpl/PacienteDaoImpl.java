@@ -233,12 +233,12 @@ public class PacienteDaoImpl implements PacienteDAO {
 		}
 	    return lista;
 	}
-	
-	
+
+
+
+	@Override
 	public Paciente buscarPaciente(int idBusqueda) {
-		
 		Connection conexion = Conexion.getConexion().getSQLConexion();
-		
 		Paciente aDevolver = new Paciente();
 		
 		try {
