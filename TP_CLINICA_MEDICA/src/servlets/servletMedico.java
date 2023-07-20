@@ -87,7 +87,7 @@ public class servletMedico extends HttpServlet {
     
     
     //VALIDACION DE DATOS 
-    private void validarDatos(HttpServletRequest request, HttpServletResponse response, Medico m) throws ServletException, IOException  {
+    private boolean validarDatos(HttpServletRequest request, HttpServletResponse response, Medico m) throws ServletException, IOException  {
     	//DATOS A MANDAR AL SERVLET
 		boolean dniValido = true;
 		boolean usuarioValido = true;
@@ -122,10 +122,11 @@ public class servletMedico extends HttpServlet {
 		        
 		        //REDIRECCION A FORMULARIO					  
 		        redireccionarFormulario(request,response,m);
-				return;
+				return true;
 		        
 		    }
 		}
+		return false;
     }
     
     
@@ -258,8 +259,12 @@ public class servletMedico extends HttpServlet {
 					
 					
 					//FUNCION MAGICA
-					validarDatos(request, response, m);
-					mDao.insertarMedico(m);
+					if(validarDatos(request, response, m)) {
+						return;
+					}
+					else {
+						mDao.insertarMedico(m);						
+					}
 				} 
 				 //FUNCION PARA MODIFICAR MEDICO
 				else if(boton.contains("Modificar Medico")) 

@@ -103,7 +103,7 @@
 									      </div>
 									      <div class="modal-footer">
 									        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-									        <form method="post" action="servletMedico">
+									        <form method="post" action="servletPaciente">
 									        	<button type="submit" class="btn btn-danger" name="btnEliminar" value="<%=paciente.getId()%>">Eliminar</button>
 									        </form>
 									      </div>

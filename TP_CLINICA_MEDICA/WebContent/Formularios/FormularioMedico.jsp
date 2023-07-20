@@ -12,7 +12,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Formulario Medico</title>
 
 	
 <% 
@@ -77,7 +77,7 @@
 
 
 
-	<h1>Agregar Medico</h1>
+	<h1><% if(banderaModificar){ %>Modificar Medico<% }else{ %>Agregar Medico<% } %></h1>
 	<form method="post" action="servletMedico">
 	<div class="form-group">
 		
@@ -227,7 +227,7 @@
 	  
 	  		<div class="form-group">
 			    <label for="localidadMedico">Localidad</label>
-			    <input type="text" class="form-control" name="localidadMedico" value="<%= (aModificar != null) ? aModificar.getDireccion().getLocalidad() : "" %>"  >
+			    <input type="text" class="form-control" required name="localidadMedico" value="<%= (aModificar != null) ? aModificar.getDireccion().getLocalidad() : "" %>"  >
 		  		<label for="localidadMedico">
 		  	
 	  			</label>

@@ -127,18 +127,18 @@ public class PacienteDaoImpl implements PacienteDAO {
 
 	//ELIMINAR REGISTRO PACIENTE
 	@Override
-	public boolean delete(Paciente paciente_a_eliminar) {
+	public boolean delete(int aEliminar) {
 		// Establece la conexión a la base de datos
 		Connection conexion = Conexion.getConexion().getSQLConexion();
 		boolean exito = false;
 		try
 		{
 			// Llama al procedimiento almacenado
-			String sp = "CALL SP_EliminarPaciente(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sp = "CALL SP_EliminarPaciente(?)";
 			CallableStatement statement = conexion.prepareCall(sp);
 			
 			// Establece los valores de los parámetros en el procedimiento almacenado
-		    statement.setInt(1, paciente_a_eliminar.getId());
+		    statement.setInt(1, aEliminar);
 		    
 		    // Ejecuta el procedimiento almacenado
 		    if(statement.executeUpdate() > 0)

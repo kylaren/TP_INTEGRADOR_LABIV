@@ -8,7 +8,7 @@ public interface PacienteDAO {
 	
 	boolean insert(Paciente paciente);
     boolean update(Paciente paciente);
-    boolean delete(Paciente paciente_a_eliminar);
+    boolean delete(int aEliminar);
     List<Paciente> readAll();
     
 }

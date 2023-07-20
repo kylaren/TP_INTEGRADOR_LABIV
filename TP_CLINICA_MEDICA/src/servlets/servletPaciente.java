@@ -77,6 +77,13 @@ public class servletPaciente extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		//METODO PARA DAR BAJA LOGICA A UN PACIENTE
+		if(request.getParameter("btnEliminar")!=null) {
+			int aEliminar = Integer.parseInt(request.getParameter("btnEliminar"));
+			pdaoI.delete(aEliminar);
+			redireccionarABML(request, response);
+		}
+		
 		// METODO PARA AGREGAR Y/O MODIFICAR UN PACIENTE
 		//FALTA MODIFICAR
 		
@@ -108,7 +115,7 @@ public class servletPaciente extends HttpServlet {
 						direccion.setNumero(request.getParameter("numeroPaciente"));
 						direccion.setLocalidad(request.getParameter("localidadPaciente"));
 						direccion.setProvincia(request.getParameter("provinciaPaciente"));
-						direccion.setPais(request.getParameter("paisPaciente"));
+						direccion.setPais("Argentina");
 						direccion.setCodigoPostal(request.getParameter("codigoPostalPaciente"));
 					paciente.setDireccion(direccion);
 					
