@@ -234,5 +234,58 @@ public class PacienteDaoImpl implements PacienteDAO {
 	    return lista;
 	}
 	
+	
+	public Paciente buscarPaciente(int idBusqueda) {
+		
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		
+		Paciente aDevolver = new Paciente();
+		
+		try {
+			String query = 	"SELECT PC.ID, P.Dni, P.Nombre, P.Apellido, P.Sexo, P.Nacionalidad, P.FechaNacimiento, P.Email, P.Telefono," + 
+							"	    		      U.Calle, U.Numero, U.Localidad, U.Provincia, U.Pais, U.CodigoPostal, PC.Estado" + 
+							"	    		      FROM Pacientes AS PC" + 
+							"	    		      JOIN Personas AS P ON PC.IdPersona = P.Id" + 
+							"	    		      JOIN Ubicaciones AS U ON P.IdUbicacion = U.Id" +
+							"                     WHERE PC.Id= " + String.valueOf(idBusqueda);
+			
+	    	Statement st = conexion.createStatement();
+	        ResultSet rs = st.executeQuery(query);
+	        
+	        while(rs.next()) {
+	        	int idActual = rs.getInt("PC.ID");
+	        	
+	        	if(idActual == idBusqueda) {
+	        		Direccion direccion = new Direccion();
+	        		 
+	        		aDevolver.setId(rs.getInt("PC.ID"));
+	        		aDevolver.setDni(rs.getString("P.Dni"));
+	        		aDevolver.setNombre(rs.getString("P.Nombre"));
+	        		aDevolver.setApellido(rs.getString("P.Apellido"));
+	        		aDevolver.setSexo(rs.getString("P.Sexo"));
+	        		aDevolver.setNacionalidad(rs.getString("P.Nacionalidad"));
+	        		aDevolver.setFechaNacimiento(rs.getDate("P.FechaNacimiento").toLocalDate());
+	        		aDevolver.setEmail(rs.getString("P.Email"));
+	        		aDevolver.setTelefono(rs.getString("P.Telefono"));
+	        		
+	        		direccion.setCalle(rs.getString("U.Calle"));
+	        		direccion.setNumero(rs.getString("U.Numero"));
+	        		direccion.setLocalidad(rs.getString("U.Localidad"));
+	        		direccion.setProvincia(rs.getString("U.Provincia"));
+	        		direccion.setPais(rs.getString("U.Pais"));
+	        		direccion.setCodigoPostal(rs.getString("U.CodigoPostal"));
+	        		aDevolver.setDireccion(direccion);
+	        		
+	        		break;
+	        	}
+	        }
+	        conexion.close();
+			
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			return aDevolver;
+	}
+	
 
 }

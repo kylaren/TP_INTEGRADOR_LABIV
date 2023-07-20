@@ -23,7 +23,7 @@
 		aModificarP= (Paciente)request.getAttribute("paciente");
 	}
 	
-	//Bandera que marca si se modifica medico o si solo se esta ingresando/corrigiendo validaciones
+	//Bandera que marca si se modifica paciente o si solo se esta ingresando/corrigiendo validaciones
 	boolean banderaModificarP = false;
 	if(request.getAttribute("banderaModificar")!=null){
 		banderaModificarP = (boolean)request.getAttribute("banderaModificar");

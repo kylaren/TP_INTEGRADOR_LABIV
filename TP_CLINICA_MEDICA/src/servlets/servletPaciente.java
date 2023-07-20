@@ -17,8 +17,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import daoImpl.MedicoDaoImpl;
 import daoImpl.PacienteDaoImpl;
 import dominio.Direccion;
+import dominio.Medico;
 import dominio.Paciente;
 
 
@@ -55,22 +57,33 @@ public class servletPaciente extends HttpServlet {
 		//METODO PARA CARGAR FORMULARIO DE PACIENTES
 		
 		if(request.getParameter("master") != null) {
-			if(request.getParameter("master").equals("formularioPaciente")) {
-				
-				String aVisitar = "formularioPaciente";
-				request.setAttribute("sitio", aVisitar );
-				
-				RequestDispatcher rdi = request.getRequestDispatcher("/Layout/MasterPage.jsp");   
-				rdi.forward(request, response);
-				
-			}
-					
 			
-		
+				if(request.getParameter("master").equals("formularioPaciente")) {
+					
+						if(request.getParameter("id")!= null) {
+							// CARGA PARA MODIFICAR	
+							PacienteDaoImpl pDao = new PacienteDaoImpl();
+							Paciente aBuscar = pDao.buscarPaciente(Integer.parseInt(request.getParameter("id")));
+							request.setAttribute("paciente", aBuscar);
+							
+							boolean modificar = true;
+							request.setAttribute("banderaModificar", modificar);
+							
+							String aVisitar = "formularioPaciente";
+							request.setAttribute("sitio", aVisitar);
+							
+							RequestDispatcher rdi = request.getRequestDispatcher("/Layout/MasterPage.jsp");   
+							rdi.forward(request, response);
+						}
+						else {
+							String aVisitar = "formularioPaciente";
+							request.setAttribute("sitio", aVisitar );
+							
+							RequestDispatcher rdi = request.getRequestDispatcher("/Layout/MasterPage.jsp");   
+							rdi.forward(request, response);
+						}
+				}
 		}
-		
-		
-		
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
@@ -85,7 +98,7 @@ public class servletPaciente extends HttpServlet {
 		}
 		
 		// METODO PARA AGREGAR Y/O MODIFICAR UN PACIENTE
-		//FALTA MODIFICAR
+		
 		
 				
 				
