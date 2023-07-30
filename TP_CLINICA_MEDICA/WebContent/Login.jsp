@@ -18,12 +18,19 @@
 			<input id="usuario" type="text" placeholder="Ingrese su usuario" required name="usuario"><br>
 		<label for="contrasena">Contraseña:</label> 
 			<input id="contrasena" type="password" placeholder="Ingrese su contraseña" required name="contrasena"><br> 
+			
+		<!-- SE VA A OBTENER EL TIPO DE USUARIO DESDE LA BASE DE DATOS
+		
 		<label for="tipoUsuario">Tipo de Usuario:</label> 
 			<select id="tipoUsuario" name="tipoUsuario" required>
 				<option value="" selected disabled>- Seleccione tipo de usuario -</option>
 				<option value="admin">Administrador</option>
 				<option value="medico">Médico</option>
-			</select><br> <input type="submit" value="Iniciar Sesión">
+			</select><br> 
+		 -->
+		 
+		 <input type="submit" value="Iniciar Sesión">
+		 
 	</form>
 
 

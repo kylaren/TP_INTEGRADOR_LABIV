@@ -50,6 +50,66 @@ public class MedicoDaoImpl implements MedicoDAO{
 	//---FUNCIONES PUBLICAS---
 	//------------------------
 	
+	// REALIZAR LOGIN
+	
+	public Medico login(String usuario, String contrasena) {
+	Connection conexion = Conexion.getConexion().getSQLConexion();
+		
+		Medico aDevolver = new Medico();
+
+		try {
+			String query = "	Select M.ID, M.Usuario, M.Contrasena, P.Dni, P.Nombre, P.Apellido, P.Sexo, P.Nacionalidad, P.FechaNacimiento," + 
+					"						U.Calle, U.Numero, U.Localidad, U.Provincia, U.Pais, U.CodigoPostal," + 
+					"						P.Email, P.Telefono, E.Nombre FROM Medicos M" + 
+					"						INNER JOIN Personas P ON M.IdPersona = P.Id" + 
+					"						INNER JOIN Ubicaciones U ON P.IdUbicacion = U.Id" + 
+					"						INNER JOIN Especialidades E ON M.IdEspecialidad = E.Id" + 
+					"						WHERE M.Usuario= '" + String.valueOf(usuario) + "' AND M.Contrasena = '" + String.valueOf(contrasena) + "'";
+			
+	    	Statement st = conexion.createStatement();
+	        ResultSet rs = st.executeQuery(query);
+			
+			while(rs.next()) {
+				
+				Direccion direccion = new Direccion();
+        		Especialidad especialidad = new Especialidad();
+        		aDevolver.setId(rs.getInt("M.ID"));
+        		aDevolver.setUsuario(rs.getString("M.Usuario"));
+        		aDevolver.setContrasena(rs.getString("M.Contrasena"));
+				aDevolver.setDni(rs.getString("P.Dni"));
+				aDevolver.setNombre(rs.getString("P.Nombre"));
+				aDevolver.setApellido(rs.getString("P.Apellido"));
+				aDevolver.setSexo(rs.getString("P.Sexo"));
+				aDevolver.setNacionalidad(rs.getString("P.Nacionalidad"));
+				aDevolver.setFechaNacimiento(rs.getDate("P.FechaNacimiento").toLocalDate());
+        		direccion.setCalle(rs.getString("U.Calle"));
+        		direccion.setNumero(rs.getString("U.Numero"));
+        		direccion.setLocalidad(rs.getString("U.Localidad"));
+        		direccion.setProvincia(rs.getString("U.Provincia"));
+        		direccion.setPais(rs.getString("U.Pais"));
+        		direccion.setCodigoPostal(rs.getString("U.CodigoPostal"));
+        		aDevolver.setDireccion(direccion);
+        		aDevolver.setEmail(rs.getString("P.Email"));
+        		aDevolver.setTelefono(rs.getString("P.Telefono"));
+        		especialidad.setNombreEspecialidad(rs.getString("E.Nombre"));
+        		aDevolver.setEspecialidad(especialidad);
+				
+			    break;
+
+			}
+			
+			conexion.close();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return aDevolver;
+		
+		
+	}
+	
+	
 	// ACTUALIZAR MEDICOS
 	
 	@Override
@@ -209,7 +269,8 @@ public class MedicoDaoImpl implements MedicoDAO{
 	    
 	}
 	
-
+	// LISTAR MEDICOS
+	
 	@Override
 	public ArrayList<Medico> listarMedicos(){
 
@@ -325,7 +386,7 @@ public class MedicoDaoImpl implements MedicoDAO{
 	  
 	}
 	
-
+	// BUSCAR MEDICO POR ID
 	@Override
 	public Medico buscarMedico(int idBusqueda){
 

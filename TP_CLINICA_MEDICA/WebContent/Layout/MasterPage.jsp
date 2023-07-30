@@ -1,6 +1,7 @@
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ page import="dominio.Medico"%>
     
 <!DOCTYPE html >
 
@@ -50,9 +51,16 @@
 				<!-- DEPENDIENDO DE USUARIO LOGUEADO SE MODIFICA LO MOSTRADO EN EL NAVBAR  -->
 				<form class="form-inline d-flex w-100 justify-content-between" action="servletMaster" method="post">
 				<%
+					Medico logueado = null;
+					String tipoUsuario = null;
 					
-					String tipoUsuario = (String) session.getAttribute("tipoUsuario");		
-					if (tipoUsuario != null && tipoUsuario.equals("admin"))  {  
+					if(session.getAttribute("usuario")!=null)
+					{
+						logueado = (Medico) session.getAttribute("usuario");
+						tipoUsuario = logueado.getEspecialidad().getNombreEspecialidad();
+					}
+					
+					if (tipoUsuario != null && tipoUsuario.equals("Admin"))  {  
 				%>
 					
 	    	
@@ -72,16 +80,7 @@
 				        </div>
 				      </li>
 				      
-				      <li class="nav-item dropdown">
-				        <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-				          	Formularios
-				        </a>
-				        <div class="dropdown-menu">
-				          <a class="dropdown-item" href="servletMaster?master=medicos"> Agregar Medico </a>
-				          <a class="dropdown-item" href="servletMaster?master=agregarPaciente" > Agregar Paciente</a>
-					
-				        </div>
-				      </li>
+				      
 				      </ul>
 				      
 		              <ul class="navbar-nav  mb-2 mb-lg-0 navbar-right">
@@ -94,7 +93,7 @@
 					
 				      
 			   		<%
-						} else if (tipoUsuario != null && tipoUsuario.equals("medico")) {
+						} else if (tipoUsuario != null && !tipoUsuario.equals("Admin")) {
 					%>   
 					
 					

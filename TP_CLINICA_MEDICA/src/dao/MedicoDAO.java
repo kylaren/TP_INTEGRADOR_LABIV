@@ -12,5 +12,5 @@ public interface MedicoDAO {
     
     ArrayList<Medico> listarMedicos();
     Medico buscarMedico(int idBusqueda);
-	
+	Medico login(String usuario, String contrasena);
 }

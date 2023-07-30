@@ -46,10 +46,9 @@
 			}
 			
 		%>	
-		<br>
+	
 
 
-<
 		<div id=tablaWrapper>
 			<table border="1" id="tablaPacientes" class="table table-bordered">
 				<thead>

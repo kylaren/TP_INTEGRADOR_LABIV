@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dominio.Medico;
+import daoImpl.MedicoDaoImpl;
+
 
 @WebServlet("/Layout/servletLogin")
 public class servletLogin extends HttpServlet {
@@ -27,28 +30,23 @@ public class servletLogin extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String usuario = request.getParameter("usuario");
-        String contrasena = request.getParameter("contrasena");
-        String tipoUsuario = request.getParameter("tipoUsuario");
+		String usuarioL = request.getParameter("usuario");
+        String contrasenaL = request.getParameter("contrasena");
         String contextPath = request.getContextPath();
 
-   
-
+        MedicoDaoImpl mDao = new MedicoDaoImpl();
+        Medico aLoguear = mDao.login(usuarioL, contrasenaL);
         
-        if (usuario.equals("admin") && contrasena.equals("admin123") && tipoUsuario.equals("admin")) {
-            HttpSession session = request.getSession();
-            session.setAttribute("tipoUsuario", "admin");
-            response.sendRedirect(contextPath + "/Layout/MasterPage.jsp"); 
-        }
-        else if (usuario.equals("medico") && contrasena.equals("medico123") && tipoUsuario.equals("medico")) {
-            HttpSession session = request.getSession();
-            session.setAttribute("tipoUsuario", "medico");
-            response.sendRedirect(contextPath + "/Layout/MasterPage.jsp");
+        if (aLoguear != null) {
+        	
+        	HttpSession sesion = request.getSession();
+            sesion.setAttribute("usuario", aLoguear);
+            response.sendRedirect(contextPath + "/Layout/MasterPage.jsp");	
         }
         else {
-            response.sendRedirect("error.jsp");
+        	response.sendRedirect("error.jsp");
         }
-		
+        //IMPLEMENTAR PANTALLA DE ERROR SI NO FUNCIONA
 
         
 		doGet(request, response);

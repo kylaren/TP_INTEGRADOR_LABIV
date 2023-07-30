@@ -126,12 +126,12 @@ public class servletMaster extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		
-//        if(request.getParameter("btnCerrarSesion").equals("Cerrar Sesion")) {
-//         	HttpSession session = request.getSession();
-//        	session.invalidate();
-//			RequestDispatcher rdi = request.getRequestDispatcher("/Layout/MasterPage.jsp");   
-//	        rdi.forward(request, response);
-//        }
+       if(request.getParameter("btnCerrarSesion").equals("Cerrar Sesion")) {
+        	HttpSession session = request.getSession();
+	       	session.invalidate();
+			RequestDispatcher rdi = request.getRequestDispatcher("/Layout/MasterPage.jsp");   
+	        rdi.forward(request, response);
+       }
         
 	}
 }
