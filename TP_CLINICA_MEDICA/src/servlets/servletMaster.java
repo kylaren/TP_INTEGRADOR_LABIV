@@ -18,8 +18,10 @@ import javax.servlet.RequestDispatcher;
 import dominio.Direccion;
 import dominio.Medico;
 import dominio.Paciente;
+import dominio.Especialidad;
 import daoImpl.MedicoDaoImpl;
 import daoImpl.PacienteDaoImpl;
+import daoImpl.EspecialidadDaoImpl;
 
 
 
@@ -29,7 +31,8 @@ public class servletMaster extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	MedicoDaoImpl mDao = new MedicoDaoImpl();
-	PacienteDaoImpl pdaoI = new PacienteDaoImpl();
+	PacienteDaoImpl pDao = new PacienteDaoImpl();
+	EspecialidadDaoImpl eDao= new EspecialidadDaoImpl();
 	
     
     public servletMaster() {
@@ -56,8 +59,26 @@ public class servletMaster extends HttpServlet {
 			}
 			
 			//METODO PARA ASIGNAR TURNOS
-			
+	
 			if(request.getParameter("master").equals("asignarTurnos")) {
+				
+				//1. Asignar valores para DDL
+				
+				ArrayList<Medico> listaM = new ArrayList<>();
+				listaM = mDao.listarMedicos();
+				
+				ArrayList<Paciente> listaP = new ArrayList<>();
+				listaP = pDao.readAll();
+				
+				ArrayList<Especialidad> listaE = new ArrayList<>();
+				listaE = eDao.listarEspecialidades();
+				
+				//2. Mandar informacion a la pagina
+				
+				request.setAttribute("especialidades", listaE);
+				request.setAttribute("medicos", listaM);
+				request.setAttribute("pacientes", listaP);
+				
 				String aVisitar = "asignarTurnos";
 				request.setAttribute("sitio", aVisitar );
 				
@@ -102,7 +123,7 @@ public class servletMaster extends HttpServlet {
 				if(request.getParameter("master").equals("pacientes")) {
 					
 					ArrayList<Paciente> lista = new ArrayList<>();
-					lista = pdaoI.readAll();
+					lista = pDao.readAll();
 					
 
 					

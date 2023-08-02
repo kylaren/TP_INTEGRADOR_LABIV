@@ -274,19 +274,11 @@ public class MedicoDaoImpl implements MedicoDAO{
 	@Override
 	public ArrayList<Medico> listarMedicos(){
 
-
-		
-		
 		Connection conexion = Conexion.getConexion().getSQLConexion();
-	    
-	    
 		ArrayList<Medico> lista = new ArrayList<>();
-
-		
+	
 	    try 
 	    {
-
-
 
 	        // Crea la sentencia SQL para insertar el paciente
 

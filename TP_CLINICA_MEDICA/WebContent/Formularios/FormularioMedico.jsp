@@ -1,6 +1,5 @@
 <%@ page import="dominio.Medico"%>
 <%@ page import="dominio.Especialidad"%>
-<%@ page import="daoImpl.EspecialidadDaoImpl" %>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.time.format.DateTimeFormatter"%>
 
