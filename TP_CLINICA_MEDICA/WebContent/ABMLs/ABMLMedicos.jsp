@@ -19,6 +19,9 @@
 	
 	</style>
 	
+
+	
+	
 	<!-- Script para paginar tablas -->
 	<link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
@@ -35,20 +38,23 @@
 	</script>
 	<!-- Script para paginar tablas -->
 	
+	<%
+	//Arraylist de doctores
+	ArrayList<Medico> listaMedicos = null;
+	if(request.getAttribute("medicos")!=null)
+	{
+		listaMedicos = (ArrayList<Medico>)request.getAttribute("medicos");
+	}
+	
+	%>
+	
 	</head>
 	<body>
 
 		<h1> ABML de Medicos </h1>
 		<br>
 		
-		<% 
-			ArrayList<Medico> listaMedicos = null;
-			if(request.getAttribute("listaM")!=null)
-			{
-				listaMedicos = (ArrayList<Medico>) request.getAttribute("listaM");
-			}
-			
-		%>	
+
 		
 		
 

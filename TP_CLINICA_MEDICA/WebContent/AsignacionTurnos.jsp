@@ -39,7 +39,7 @@
 	}
 	
 	
-	%>
+	%>	
 	
 </head>
 <body>
@@ -75,6 +75,12 @@
 			    <% } %>
 			</select>
 		</div>
+		
+		<div class="form-group">
+		    <label for="fechaTurno">Fecha</label>
+		    <input type="text" required class="form-control datepicker" name="fechaTurno">
+
+		</div>
 
 	  
 	   	 <div class="form-group">
@@ -108,8 +114,9 @@
 		</div>
 
 	  
-
-	  	<button type="submit" class="btn btn-dark">Confirmar Turno</button>
+		<br>
+	   <input type="submit" class="btn btn-dark" name="btnConfirmar" value="Confirmar Turno">
+	  
 	  </div>
 	</form>
 

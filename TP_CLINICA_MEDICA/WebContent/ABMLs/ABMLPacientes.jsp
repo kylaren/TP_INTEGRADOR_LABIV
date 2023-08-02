@@ -34,18 +34,22 @@
 		});
 	</script>
 
+	<%
+	//Arraylist de pacientes
+	ArrayList<Paciente> listaPacientes = null;
+	if(request.getAttribute("pacientes")!=null)
+	{
+		listaPacientes = (ArrayList<Paciente>)request.getAttribute("pacientes");
+	}
+	
+	%>
+
+
 </head>
 <body>
 		<h1> ABML de Pacientes </h1>
 		<br>
-		<% 
-			ArrayList<Paciente> listaPacientes = null;
-			if(request.getAttribute("listaP")!=null)
-			{
-				listaPacientes = (ArrayList<Paciente>) request.getAttribute("listaP");
-			}
-			
-		%>	
+
 	
 
 

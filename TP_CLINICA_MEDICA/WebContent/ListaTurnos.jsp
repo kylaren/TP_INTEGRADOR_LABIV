@@ -1,3 +1,5 @@
+<%@ page import="java.util.ArrayList"%>
+<%@ page import="dominio.Turno"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -10,6 +12,14 @@
 			overflow-x:scroll;
 			}
 		</style>
+		<%
+		ArrayList<Turno> listaTurnos = null;
+		if(request.getAttribute("listaT")!=null)
+		{
+			listaTurnos = (ArrayList<Turno>)request.getAttribute("listaT");
+		}
+		%>
+		
 	</head>
 <body>
 	<h1> Lista de Turnos </h1>
@@ -19,32 +29,33 @@
 				<thead>
 					<tr>
 						<th>Especialidad</th>
-						<th>ID Medico</th>
 						<th>Nombre Completo Medico</th>
-						<th>Horario</th>
-						<th>ID Paciente</th>
+						<th>Fecha y Horario</th>
 						<th>Nombre Completo Paciente</th>
 						<th>Estado Turno</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr>  
-						<td>Dentista</td>
-						<td>6</td>
-						<td>Roberto Gomez Bolaños</td>
-						<td>10:00</td>
-						<td>3</td>
-						<td>Cosme Fulanito  <a href="#">[ i ]</a> </td>
-				     	<td>
-					     	<select class="form-control">
-						      <option> LIBRE </option>
-						  	  <option>OCUPADO</option>
-						  	  <option>AUSENTE</option>
-						  	  <option>PRESENTE</option>
-	
-							</select>
-						</td>
-					</tr>
+					<%  if(listaTurnos!=null)
+						for(Turno t : listaTurnos) 
+						{
+						%>
+						<tr>  
+							<td><%= t.getMedico().getEspecialidad().getNombreEspecialidad() %></td>
+							<td><%= t.getMedico().getNombre() %>&nbsp;<%= t.getMedico().getApellido() %></td>
+							<td><%= t.getHorario().getDia() %>&nbsp;<%= t.getHorario().getInicioJornada() %></td>
+							<td><%= t.getPaciente().getNombre() %>&nbsp;<%= t.getPaciente().getApellido() %> </td>
+					     	<td>
+						     	<select class="form-control">
+							      <option> LIBRE </option>
+							  	  <option>OCUPADO</option>
+							  	  <option>AUSENTE</option>
+							  	  <option>PRESENTE</option>
+		
+								</select>
+							</td>
+						</tr>
+					<%  } %>
 			    </tbody>
 		
 			</table>

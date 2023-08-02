@@ -18,9 +18,11 @@ import javax.servlet.RequestDispatcher;
 import dominio.Direccion;
 import dominio.Medico;
 import dominio.Paciente;
+import dominio.Turno;
 import dominio.Especialidad;
 import daoImpl.MedicoDaoImpl;
 import daoImpl.PacienteDaoImpl;
+import daoImpl.TurnoDaoImpl;
 import daoImpl.EspecialidadDaoImpl;
 
 
@@ -30,6 +32,7 @@ import daoImpl.EspecialidadDaoImpl;
 public class servletMaster extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
+	TurnoDaoImpl tDao = new TurnoDaoImpl();
 	MedicoDaoImpl mDao = new MedicoDaoImpl();
 	PacienteDaoImpl pDao = new PacienteDaoImpl();
 	EspecialidadDaoImpl eDao= new EspecialidadDaoImpl();
@@ -89,6 +92,12 @@ public class servletMaster extends HttpServlet {
 			//METODO PARA LISTAR TURNOS
 			
 			if(request.getParameter("master").equals("listarTurnos")) {
+				
+				ArrayList<Turno> lista = new ArrayList<>();
+				lista = tDao.listarTurnos();
+				
+				request.setAttribute("listaT", lista);
+				
 				String aVisitar = "listarTurnos";
 				request.setAttribute("sitio", aVisitar );
 				
@@ -135,8 +144,8 @@ public class servletMaster extends HttpServlet {
 					RequestDispatcher rdi = request.getRequestDispatcher("/Layout/MasterPage.jsp");   
 			        rdi.forward(request, response);
 				}
-			
-			
+		
+
 			
 		}
 		response.getWriter().append("Served at: ").append(request.getContextPath());	
